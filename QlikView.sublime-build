@@ -1,0 +1,4 @@
+{
+	"cmd": ["C:\\Program Files\\QlikView\\qv.exe", "/r", "/nodata", "../EtlApps/${file_base_name}.qvw"],
+    "selector": "source.qvs"	
+}
