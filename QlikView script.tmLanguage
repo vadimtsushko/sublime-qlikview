@@ -219,19 +219,19 @@
 				<dict>
 					<key>captures</key>
 					<dict>
-						<key>2</key>
+						<key>1</key>
 						<dict>
 							<key>name</key>
 							<string>constant.numeric.qvs</string>
 						</dict>
-						<key>3</key>
+						<key>2</key>
 						<dict>
 							<key>name</key>
 							<string>constant.numeric.qvs</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(\s|^|=|\(|,|&gt;|&lt;|\+|/|\*)(\-?\d+)(\.\d+)?</string>
+					<string>(?&lt;=\s|^|=|\(|,|&gt;|&lt;|\+|/|\*)(\-?\d+)(\.\d+)?</string>
 				</dict>
 			</array>
 		</dict>

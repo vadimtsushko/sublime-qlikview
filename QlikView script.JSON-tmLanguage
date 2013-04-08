@@ -102,12 +102,12 @@
     "numericLiterals": {
       			"patterns": [
       		    { 
-      		      "match": "(\\s|^|=|\\(|,|>|<|\\+|/|\\*)(\\-?\\d+)(\\.\\d+)?",
+      		      "match": "(?<=\\s|^|=|\\(|,|>|<|\\+|/|\\*)(\\-?\\d+)(\\.\\d+)?",
       				 	"captures": {
-      				 		"2": {
+      				 		"1": {
       				 			"name": "constant.numeric.qvs"
       				 		 },
-      				 		"3": {
+      				 		"2": {
       				 			"name": "constant.numeric.qvs"
       				 		}
       				}	
