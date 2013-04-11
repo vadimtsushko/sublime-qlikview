@@ -40,6 +40,10 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#tableIdentifiers</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#braces</string>
 		</dict>
 	</array>
@@ -74,6 +78,10 @@
 					<array>
 						<dict>
 							<key>include</key>
+							<string>#fileQualifiers</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>#functions</string>
 						</dict>
 						<dict>
@@ -83,6 +91,10 @@
 						<dict>
 							<key>include</key>
 							<string>#braces</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>#strings</string>
 						</dict>
 						<dict>
 							<key>include</key>
@@ -122,6 +134,18 @@
 				</dict>
 			</array>
 		</dict>
+		<key>fileQualifiers</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(?i)(?&lt;=\s|\(|,)(QVD|QVX|TXT|EMBEDDED LABELS|delimiter is|no quotes|utf8|no labels|msq|header is \d+ lines)</string>
+					<key>name</key>
+					<string>support.constant</string>
+				</dict>
+			</array>
+		</dict>
 		<key>functions</key>
 		<dict>
 			<key>patterns</key>
@@ -134,12 +158,12 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>support.function.qvs</string>
+							<string>entity.name.function.qvs</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>support.function.qvs</string>
+							<string>entity.name.function.qvs</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -149,7 +173,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>support.function.qvs</string>
+							<string>entity.name.function.qvs</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -286,6 +310,18 @@
 							<string>#variables</string>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>tableIdentifiers</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(^(\s)*\w+:(\s)*)$</string>
+					<key>name</key>
+					<string>support.constant</string>
 				</dict>
 			</array>
 		</dict>
