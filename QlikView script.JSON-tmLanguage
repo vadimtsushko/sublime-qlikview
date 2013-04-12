@@ -2,13 +2,14 @@
   "scopeName": "source.qvs", 
   "fileTypes": ["qvs"], 
   "patterns": [
-	 { "include": "#comments" },
-	 { "include": "#strings" },
-	 { "include": "#numericLiterals" },	
-	 { "include": "#variables" },      		
-   { "include": "#qualifiers" },      
-	 { "include": "#functions" },	
+	 { "include": "#comments"},
+	 { "include": "#strings"},
+	 { "include": "#numericLiterals"},	
+	 { "include": "#variables"},      		
+   { "include": "#qualifiers"},      
+	 { "include": "#functions"},	
 	 { "include": "#keyword"},
+   { "include": "#operators"},
    { "include": "#tableIdentifiers"},
    { "include": "#braces"}		
   ],
@@ -32,22 +33,22 @@
 	"keyword": {
 			"patterns": [
 	            {
-	            	
-		            "match": "(?i)(^|\\s)\\b(ADD|ALIAS|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|REPLACE|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|NOT|OR|WHILE|AND|WHERE|ORDER|GROUP|BY)\\b",
-					"captures": {
-					   	"2": {
-					   		"name": "keyword.control.qvs"
-					   	} 	
-   					}		            
-				},			
+		
+		            "match": "(?i)(^|\\s)\\b(ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY)\\b",
+				  	"captures": {
+				  	 	"2": {
+				  	 	 	"name": "keyword.control.qvs"
+				  	 	}	
+				  	}	 	            
+				},	 	 	
 	            {
-	            	
-		            "match": "(?i)(^|\\s)(LEFT|RIGHT|IF)(?!\\()",
+		
+		            "match": "(?i)(^|\\s)(LEFT|RIGHT|IF|REPLACE)(?!\\()",
 					"captures": {
-					   	"2": {
-					   		"name": "keyword.control.qvs"
-					   	} 	
-   					}		            
+					 	"2": {
+					 	 	"name": "keyword.control.qvs"
+					 	}	
+					}	 	            
 				}
 			]            
         },
@@ -55,6 +56,10 @@
       "match": "(?i)(DISTINCT|TOTAL)(\\s|<)",
       "captures": {"1": { "name": "keyword.control.qvs" }}}
     ]},	
+  "operators": {"patterns": [
+      {"match": "(&|/)","name": "keyword.control.qvs" },
+      {"match": "(?i)\\b(AND|OR)\\b","name": "keyword.control.qvs" }
+      ]},    
   "functions": {
 			"patterns": [
 	            {
@@ -68,6 +73,7 @@
                   {"include": "#functions"},
                   {"include": "#qualifiers" },
                   {"include": "#numericLiterals"},
+                  {"include": "#operators"},
                   {"include": "#strings"},
                   {"include": "#braces"}
                 ]  
@@ -80,17 +86,21 @@
 			"patterns": [
 				{
 					"begin": "\\$\\(",
-          "patterns": [{ "include": "#functions" }, { "include": "#numericLiterals" }, { "include": "#brace" }],  
-      		"end": "\\)",
-      		"name": "variable.parameter.qvs"
-      	},
+          "beginCaptures": {"0": {"name": "variable.parameter.qvs"}},
+          "patterns": [
+            { "include": "#functions" },
+            { "include": "#numericLiterals" },
+            { "include": "#brace" }],  
+		      "end": "\\)",
+          "endCaptures": {"0": {"name": "variable.parameter.qvs"}}
+		     },
         {"name": "variable.parameter.qvs","match": "\\$\\d+"}
       ]
     },
   "braces":{
       "patterns": [{
           "begin": "\\(",
-          "beginCaptures": {"0": {"name": "string.single.quoted.qvs"}},           
+          "beginCaptures": {"0": {"name": "support.constant.qvs"}},           
           "patterns": [
             {"include": "#fileQualifiers"},
             {"include": "#functions"},
@@ -99,7 +109,7 @@
             {"include": "#strings"},             
             {"include": "#numericLiterals"}],  
           "end": "\\)",
-          "endCaptures": {"0": {"name": "string.single.quoted.qvs"}}
+          "endCaptures": {"0": {"name": "support.constant.qvs"}}
         }]
       },            
   "numericLiterals": {
@@ -117,7 +127,7 @@
     "patterns": [
       { 
         "match": "(^(\\s)*\\w+:(\\s)*)$",
-         "name": "support.constant"
+         "name": "support.constant.qvs"
       }
     ]
   },
@@ -125,7 +135,7 @@
     "patterns": [
       { 
         "match": "(?i)(?<=\\s|\\(|,)(QVD|QVX|TXT|EMBEDDED LABELS|delimiter is|no quotes|utf8|no labels|msq|header is \\d+ lines)",
-         "name": "support.constant"
+         "name": "support.constant.qvs"
       }
     ]
   },		

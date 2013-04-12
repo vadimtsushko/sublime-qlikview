@@ -40,6 +40,10 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#operators</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#tableIdentifiers</string>
 		</dict>
 		<dict>
@@ -61,7 +65,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>string.single.quoted.qvs</string>
+							<string>support.constant.qvs</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -71,7 +75,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>string.single.quoted.qvs</string>
+							<string>support.constant.qvs</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -142,7 +146,7 @@
 					<key>match</key>
 					<string>(?i)(?&lt;=\s|\(|,)(QVD|QVX|TXT|EMBEDDED LABELS|delimiter is|no quotes|utf8|no labels|msq|header is \d+ lines)</string>
 					<key>name</key>
-					<string>support.constant</string>
+					<string>support.constant.qvs</string>
 				</dict>
 			</array>
 		</dict>
@@ -196,6 +200,10 @@
 						</dict>
 						<dict>
 							<key>include</key>
+							<string>#operators</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>#strings</string>
 						</dict>
 						<dict>
@@ -220,7 +228,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?i)(^|\s)\b(ADD|ALIAS|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|REPLACE|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|NOT|OR|WHILE|AND|WHERE|ORDER|GROUP|BY)\b</string>
+					<string>(?i)(^|\s)\b(ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY)\b</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -232,7 +240,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?i)(^|\s)(LEFT|RIGHT|IF)(?!\()</string>
+					<string>(?i)(^|\s)(LEFT|RIGHT|IF|REPLACE)(?!\()</string>
 				</dict>
 			</array>
 		</dict>
@@ -256,6 +264,24 @@
 					</dict>
 					<key>match</key>
 					<string>(?&lt;=\s|^|=|\(|,|&gt;|&lt;|\+|/|\*)(\-?\d+)(\.\d+)?</string>
+				</dict>
+			</array>
+		</dict>
+		<key>operators</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(&amp;|/)</string>
+					<key>name</key>
+					<string>keyword.control.qvs</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?i)\b(AND|OR)\b</string>
+					<key>name</key>
+					<string>keyword.control.qvs</string>
 				</dict>
 			</array>
 		</dict>
@@ -321,7 +347,7 @@
 					<key>match</key>
 					<string>(^(\s)*\w+:(\s)*)$</string>
 					<key>name</key>
-					<string>support.constant</string>
+					<string>support.constant.qvs</string>
 				</dict>
 			</array>
 		</dict>
@@ -332,10 +358,24 @@
 				<dict>
 					<key>begin</key>
 					<string>\$\(</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>variable.parameter.qvs</string>
+						</dict>
+					</dict>
 					<key>end</key>
 					<string>\)</string>
-					<key>name</key>
-					<string>variable.parameter.qvs</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>variable.parameter.qvs</string>
+						</dict>
+					</dict>
 					<key>patterns</key>
 					<array>
 						<dict>
