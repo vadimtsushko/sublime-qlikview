@@ -88,9 +88,10 @@
 					"begin": "\\$\\(",
           "beginCaptures": {"0": {"name": "variable.parameter.qvs"}},
           "patterns": [
-            { "include": "#functions" },
-            { "include": "#numericLiterals" },
-            { "include": "#brace" }],  
+            {"include": "#functions"},
+            {"include": "#variables"},
+            {"include": "#numericLiterals"},
+            {"include": "#braces"}],  
 		      "end": "\\)",
           "endCaptures": {"0": {"name": "variable.parameter.qvs"}}
 		     },

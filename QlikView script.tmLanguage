@@ -384,11 +384,15 @@
 						</dict>
 						<dict>
 							<key>include</key>
+							<string>#variables</string>
+						</dict>
+						<dict>
+							<key>include</key>
 							<string>#numericLiterals</string>
 						</dict>
 						<dict>
 							<key>include</key>
-							<string>#brace</string>
+							<string>#braces</string>
 						</dict>
 					</array>
 				</dict>
