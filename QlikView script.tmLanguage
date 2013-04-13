@@ -144,7 +144,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?i)(?&lt;=\s|\(|,)(QVD|QVX|TXT|EMBEDDED LABELS|delimiter is|no quotes|utf8|no labels|msq|header is \d+ lines)</string>
+					<string>(?i)(?&lt;=\s|\(|,)(ansi|oem|mac|utf8|unicode|qvd|qvx|txt|fix|dif|biff|html|delimiter is|no eof|no quotes|msq|xmlsax|xmlsimple|no labels|embedded labels|explicit labels|no eof|msq|header is (\d+ lines)?|record is (\d+ lines)?)|table is</string>
 					<key>name</key>
 					<string>support.constant.qvs</string>
 				</dict>
@@ -182,6 +182,10 @@
 					</dict>
 					<key>patterns</key>
 					<array>
+						<dict>
+							<key>include</key>
+							<string>#comments</string>
+						</dict>
 						<dict>
 							<key>include</key>
 							<string>#variables</string>
@@ -345,7 +349,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(^(\s)*\w+:(\s)*)$</string>
+					<string>(^(\s)*(\w|\.)+:(\s)*)$</string>
 					<key>name</key>
 					<string>support.constant.qvs</string>
 				</dict>
