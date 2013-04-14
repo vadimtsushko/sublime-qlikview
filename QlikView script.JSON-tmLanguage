@@ -6,7 +6,8 @@
 	 { "include": "#strings"},
 	 { "include": "#numericLiterals"},	
 	 { "include": "#variables"},      		
-   { "include": "#qualifiers"},      
+   { "include": "#qualifiers"},  
+   { "include": "#yamlNewDocument"},    
 	 { "include": "#functions"},	
 	 { "include": "#keyword"},
    { "include": "#operators"},
@@ -128,15 +129,23 @@
   "tableIdentifiers": {
     "patterns": [
       { 
-        "match": "(^(\\s)*(\\w|\\.)+:(\\s)*)$",
+        "match": "(^(\\s)*(\\w|\\.)+:(\\s)*)",
          "name": "support.constant.qvs"
       }
     ]
   },
+"yamlNewDocument": {
+    "patterns": [
+      { 
+        "match": "---",
+         "name": "support.constant.qvs"
+      }
+    ]
+  },  
   "fileQualifiers": {
     "patterns": [
       { 
-        "match": "(?i)(?<=\\s|\\(|,)(ansi|oem|mac|utf8|unicode|qvd|qvx|txt|fix|dif|biff|html|delimiter is|no eof|no quotes|msq|xmlsax|xmlsimple|no labels|embedded labels|explicit labels|no eof|msq|header is (\\d+ lines)?|record is (\\d+ lines)?)|table is",
+        "match": "(?i)(?<=\\s|\\(|,)(codepage is \\d+|ansi|oem|mac|utf8|unicode|qvd|qvx|txt|fix|dif|biff|html|delimiter is|no eof|no quotes|msq|xmlsax|xmlsimple|no labels|embedded labels|explicit labels|no eof|msq|header is (\\d+ lines)?|record is (\\d+ lines)?)|table is",
          "name": "support.constant.qvs"
       }
     ]
