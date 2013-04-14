@@ -46,8 +46,24 @@
 <p>Both block comments (/* */) and line comments (//) are supported.</p>
 <p>Variables, built-in functions and so on are trying properly show their boundaries by by coloring corresponding braces.</p>
 <p>Nesting supported for all constucts - variable as parameter of function, function within function, function within variable and so on</p>
-<p>Conflicts between some build-in functions and keywords (IF, LEFT, RIGHT, REPLACE) resolve by context</p>
+<p>Conflicts between some build-in functions and keywords (IF, LEFT, RIGHT, REPLACE) are resolving by context</p>
 
+<h4>Using build system </h4>
+<p>In Sublime Text2 Build systems used to run external programs from within editor and and print captured output to the output panel.
+You may use some name convention to configure build system. For example: if your load scripts are saved in same directory as your ETL QlikView documents - you shoud edit QlikView.sublime-build file as:</p>
+<pre>
+  { "cmd": ["C:\\Program Files\\QlikView\\qv.exe", "/r", "/nodata", "${file_base_name}.qvw"],
+    "selector": "source.qvs"  
+  }
+</pre>
+I keep load scripts in subfolder Scripts and ETL QlikView apps in EtlApps subfolder of Project directory so original cmd parameter looks like
+<pre> 
+  "cmd": ["C:\\Program Files\\QlikView\\qv.exe", "/r", "/nodata", "../EtlApps/${file_base_name}.qvw"],
+</pre>
+<h4>Installation </h4>
+<p>Download plugin from <a href="http://inqlik.ru/downloads">InQlik download page</a>.
+  Extract zip file into Sublime Text 2 packages directory (You may locate packages directory by Sublime text 2 menu command: Preferences / Browse packages)
+</p>
 </section>
 </div>
 
