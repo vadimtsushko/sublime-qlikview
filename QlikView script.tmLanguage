@@ -345,6 +345,21 @@
 						</dict>
 					</array>
 				</dict>
+				<dict>
+					<key>begin</key>
+					<string>\[</string>
+					<key>end</key>
+					<string>\]</string>
+					<key>name</key>
+					<string>string.single.quoted.qvs</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#variables</string>
+						</dict>
+					</array>
+				</dict>
 			</array>
 		</dict>
 		<key>tableIdentifiers</key>
@@ -384,6 +399,8 @@
 							<string>variable.parameter.qvs</string>
 						</dict>
 					</dict>
+					<key>name</key>
+					<string>variable.parameter.qvs</string>
 					<key>patterns</key>
 					<array>
 						<dict>

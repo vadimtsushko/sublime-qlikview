@@ -1,6 +1,6 @@
 { "name": "QlikView script file",
   "scopeName": "source.qvs", 
-  "fileTypes": ["qvs"], 
+  "fileTypes": ["qvs"],
   "patterns": [
 	 { "include": "#comments"},
 	 { "include": "#strings"},
@@ -95,7 +95,8 @@
             {"include": "#numericLiterals"},
             {"include": "#braces"}],  
 		      "end": "\\)",
-          "endCaptures": {"0": {"name": "variable.parameter.qvs"}}
+          "endCaptures": {"0": {"name": "variable.parameter.qvs"}},
+          "name": "variable.parameter.qvs"
 		     },
         {"name": "variable.parameter.qvs","match": "\\$\\d+"}
       ]
@@ -151,17 +152,22 @@
     ]
   },		
   "strings": {
-      	      "patterns": [
-      		        { "name": "string.double.quoted.qvs",
-      		          "begin": "\"",
-      		          "end": "\"",
-      				      "patterns": [{ "include": "#variables" }]
-      		        },
-      		        { "name": "string.single.quoted.qvs",
-      		          "begin": "'",
-      		          "end": "'",
-      				      "patterns": [{ "include": "#variables" }]
-      		        }
+	      "patterns": [
+		        { "name": "string.double.quoted.qvs",
+		          "begin": "\"",
+		          "end": "\"",
+				      "patterns": [{ "include": "#variables" }]
+		        },
+		        { "name": "string.single.quoted.qvs",
+		          "begin": "'",
+		          "end": "'",
+				      "patterns": [{ "include": "#variables" }]
+		        },
+            { "name": "string.single.quoted.qvs",
+              "begin": "\\[",
+              "end": "\\]",
+              "patterns": [{ "include": "#variables" }]
+            }
       		]
       		}
     },	
