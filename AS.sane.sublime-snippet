@@ -1,4 +1,0 @@
-<snippet><description>Expression AS FielName;</description><tabTrigger>as</tabTrigger><scope>source.qvs</scope><content>
-<![CDATA[${1:expr} as ${2:fieldName},
-$0]]>
-</content></snippet>

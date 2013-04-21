@@ -436,7 +436,13 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>---</string>
+					<string>^---$</string>
+					<key>name</key>
+					<string>support.constant.qvs</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>^\.\.\.$</string>
 					<key>name</key>
 					<string>support.constant.qvs</string>
 				</dict>
