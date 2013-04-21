@@ -5,6 +5,8 @@
 	<key>fileTypes</key>
 	<array>
 		<string>qvs</string>
+		<string>qlikview-expression</string>
+		<string>qlikview-expression-table</string>
 	</array>
 	<key>name</key>
 	<string>QlikView script file</string>

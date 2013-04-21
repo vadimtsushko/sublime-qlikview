@@ -1,6 +1,6 @@
 { "name": "QlikView script file",
   "scopeName": "source.qvs", 
-  "fileTypes": ["qvs"],
+  "fileTypes": ["qvs", "qlikview-expression", "qlikview-expression-table"],
   "patterns": [
 	 { "include": "#comments"},
 	 { "include": "#strings"},

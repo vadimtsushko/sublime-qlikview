@@ -1,0 +1,4 @@
+<snippet><description>Drop Table</description><tabTrigger>dt</tabTrigger><scope>source.qvs</scope><content>
+<![CDATA[DROP TABLE ${1:TableName};
+$0]]>
+</content></snippet>
