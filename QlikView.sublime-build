@@ -1,4 +1,5 @@
 {
-	"cmd": ["C:\\Program Files\\QlikView\\qv.exe", "/r", "/nodata", "../EtlApps/${file_base_name}.qvw"],
+	"cmd": ["dart", "c:\\projects\\qvs_parser\\bin\\qvs.dart", "${file_base_name}.qvs"],
+    "file_regex": "Parse error File: (\\S+) row: ([0-9]+) col: ([0-9]+) message: (\\S+)",	
     "selector": "source.qvs"	
 }
