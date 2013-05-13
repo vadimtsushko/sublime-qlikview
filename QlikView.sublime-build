@@ -1,5 +1,5 @@
 {
-	"cmd": ["${packages}\\Qlikview\\qvsrun.cmd", "${file_name}"],
-    "file_regex": "Parse error File: (\\S+) row: ([0-9]+) col: ([0-9]+) message: (\\S+)",	
+	"cmd": ["dart","${packages}\\Qlikview\\qvs.dart.snapshot", "${file_name}"],
+    "file_regex": "File: (\\S+) row: ([0-9]+) col: ([0-9]+) message: (\\S+)",	
     "selector": "source.qvs"	
 }
