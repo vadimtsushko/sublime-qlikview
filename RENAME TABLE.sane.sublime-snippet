@@ -1,0 +1,3 @@
+<snippet><description>RENAME TABLE</description><tabTrigger>rt</tabTrigger><scope>source.qvs</scope><content>
+<![CDATA[RENAME TABLE ${1:TableFrom} TO ${:TableTo};$0 ]]>
+</content></snippet>
