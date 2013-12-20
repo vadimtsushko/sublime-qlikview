@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>fileTypes</key>
 	<array>
 		<string>qvs</string>
-		<string>qlikview-expression</string>
 	</array>
 	<key>name</key>
 	<string>QlikView script file</string>
@@ -30,10 +29,6 @@
 		<dict>
 			<key>include</key>
 			<string>#qualifiers</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#yamlNewDocument</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -237,7 +232,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?i)(^|\s)\b(ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY)\b</string>
+					<string>(?i)(^|\s)\b(ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY|WITH)\b</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -427,24 +422,6 @@
 					<string>\$\d+</string>
 					<key>name</key>
 					<string>variable.parameter.qvs</string>
-				</dict>
-			</array>
-		</dict>
-		<key>yamlNewDocument</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>match</key>
-					<string>^---$</string>
-					<key>name</key>
-					<string>support.constant.qvs</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>^\.\.\.$</string>
-					<key>name</key>
-					<string>support.constant.qvs</string>
 				</dict>
 			</array>
 		</dict>

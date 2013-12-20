@@ -1,0 +1,48 @@
+{ "name": "QlikView expressions file",
+  "scopeName": "source.qlikview-expression", 
+  "fileTypes": ["qlikview-expression"],
+  "patterns": [
+	 { "include": "#yamlNewDocument"},    
+	 { "include": "#qvs"},	
+   { "include": "#simpleField"}
+  ],
+  "repository": {
+
+"qvs": {
+      "patterns": [
+              {
+        
+                "begin": "^(\\s)*def:",
+                "beginCaptures": {"0": {"name": "support.constant.qlikview-expression"}},
+                "end": "((^(\\s)*(name|label|title|):(\\s)*)|^---$)",
+                "endCaptures": {"0": {"name": "support.constant.qlikview-expression"}},
+                "patterns": [
+                  {"include": "source.qvs"}
+                ]  
+        }
+
+        ]            
+        },  
+  "simpleField": {
+    "patterns": [
+      { 
+        "match": "(^(\\s)*(name|label|title):(\\s)*)",
+         "name": "support.constant.qlikview-expression"
+      }
+    ]
+  },
+"yamlNewDocument": {
+    "patterns": [
+      { 
+        "match": "^---$",
+         "name": "support.constant.qlikview-expression"
+      },
+      { 
+        "match": "^\\.\\.\\.$",
+         "name": "support.constant.qlikview-expression"
+      }
+    ]
+  }
+    },	
+  "uuid": "6b77dc03-7003-41f4-a9f6-287849f88d4f"
+}

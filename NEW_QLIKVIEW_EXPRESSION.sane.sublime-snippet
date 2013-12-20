@@ -1,4 +1,4 @@
-<snippet><description>New QlikView Expression (YAML)</description><tabTrigger>---</tabTrigger><scope>source.qvs</scope><content>
+<snippet><description>New QlikView Expression (YAML)</description><tabTrigger>---</tabTrigger><scope>source.qlikview-expression</scope><content>
 <![CDATA[---
 name: $1
 def: $4
