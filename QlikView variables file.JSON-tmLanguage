@@ -1,0 +1,48 @@
+{ "name": "QlikView vars file",
+  "scopeName": "source.qlikview-vars", 
+  "fileTypes": ["qlikview-vars"],
+  "patterns": [
+   { "include": "#yamlNewDocument"},    
+   { "include": "#qvs"},  
+   { "include": "#simpleField"}
+  ],
+  "repository": {
+
+"qvs": {
+      "patterns": [
+              {
+        
+                "begin": "^(\\s)*def:",
+                "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
+                "end": "((^(\\s)*(name|label|title|):(\\s)*)|^---$)",
+                "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
+                "patterns": [
+                  {"include": "source.qvs"}
+                ]  
+        }
+
+        ]            
+        },  
+  "simpleField": {
+    "patterns": [
+      { 
+        "match": "(^(\\s)*(set|let|comment):(\\s)*)",
+         "name": "support.constant.qlikview-vars"
+      }
+    ]
+  },
+"yamlNewDocument": {
+    "patterns": [
+      { 
+        "match": "^---$",
+         "name": "support.constant.qlikview-vars"
+      },
+      { 
+        "match": "^\\.\\.\\.$",
+         "name": "support.constant.qlikview-vars"
+      }
+    ]
+  }
+    },  
+  "uuid": "6b77dc03-7003-41f4-a9f6-287849f88d5f"
+}
