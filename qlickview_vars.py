@@ -7,9 +7,13 @@ import StringIO
 import csv
 
 EXT_QLIKVIEW_VARS  = ".qlikview-vars"
-EXT_QLIKVIEW_VARS_TABLE = ".cvs"
+EXT_QLIKVIEW_VARS_TABLE = ".csv"
+ALLOWED_TAGS = ('label','comment', 'definition','background','condition',
+    'search_tag','totals_label','separator')
+FIELDS_TO_SKIP = ('definition','tag','set','let','command','name', 'separator')
+NAME_MAP = {}
 
-line_template = re.compile(r'^\s*(?P<key>\w*?):\s*(?P<val>.*)$')
+line_template = re.compile(r'^(?P<key>\w*?):\s*(?P<val>.*)$')
 param_template = re.compile(r'^\s*\-\s*(?P<val>.*)$')
 
 linenum = 0
@@ -21,10 +25,16 @@ def parse_expression_file(path, name, text):
     global defs
     global macro
     global output
+    global NAME_MAP
+    NAME_MAP = {}
+    for tag in ALLOWED_TAGS:
+        NAME_MAP[tag] = tag
+        NAME_MAP['separator'] = '.'
     expression = {}
     defs = {}
     linenum = 0
     macro = []
+    output = []
     def expand_macro():
         if defs.get(macro[0]) is None:
             raise SyntaxError('Parsing error: definition for macro `%s` is not found' % macro[0])
@@ -59,15 +69,22 @@ def parse_expression_file(path, name, text):
             exp['definition'] = expand_macro()
         defs[exp['name']] = exp['definition']
         comment = exp.get('comment')
-        tag = exp.get('tag')
-        title = exp.get('title')
-        if title is None or title.strip() == '':
-            title = exp['name']    
-        putRow(expression['name'],expression['definition'],expression['command'], comment, tag)
+        tag = exp.get('search_tag')
+        command = exp.get('command')
+        name = exp.get('name')
+        if name == '__NAME_MAP__':
+            for key in exp.keys():
+               NAME_MAP[key] = exp[key]
+        else:    
+            putRow(name,expression['definition'],command, comment, tag)
+            for key in exp.keys():
+                if key not in FIELDS_TO_SKIP:
+                    varName = '%s%s%s' % (name,NAME_MAP['separator'],NAME_MAP[key]) 
+                    putRow(varName,expression[key],'SET', '', tag) 
         init_expression()
         return None
     def putRow(key, value, command, comment, priority):
-        output.append(['%s %s' % (command, key) ,value, comment, priority])
+        output.append(['%s %s' % (command.upper(), key) ,value, comment, priority])
     def parse_val(text):
         return text.strip()
     current_field = None
@@ -100,7 +117,7 @@ def parse_expression_file(path, name, text):
         if m['key'] == 'set' or m['key'] == 'let':
             expression['name'] =  m['val']   
             expression['command'] = m['key']
-        elif m['key'] in ('label','comment', 'definition','background','condition'):
+        elif m['key'] in ALLOWED_TAGS:
             expression[m['key']] = m['val']
         else:
             if m['key'] == 'macro':

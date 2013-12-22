@@ -6,7 +6,9 @@
    { "include": "#definition"},
    { "include": "#expressionWithEqualSign"}, 
    { "include": "#expressionWithoutEqualSign"},   
-   { "include": "#simpleField"}
+   { "include": "#simpleField"},
+   { "include": "#newtag"}
+
   ],
   "repository": {
 
@@ -15,9 +17,10 @@
               {        
                 "begin": "(definition|macro):",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
-                "end": "(^(?=(definition|label|comment|condition|background))|^---$)",
+                "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
-                "patterns": [{"include": "source.qvs"}]  
+                "patterns": [{"include": "source.qvs"}],
+                "name": "meta.expression.qlikview-vars"  
               }]            
         },
 "expressionWithEqualSign": {
@@ -25,9 +28,10 @@
               {        
                 "begin": "^(label|comment|condition|background):\\s*(?==)",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
-                "end": "(^(?=(definition|label|comment|condition|background))|^---$)",
+                "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
-                "patterns": [{"include": "source.qvs"}]  
+                "patterns": [{"include": "source.qvs"}],
+                "name": "meta.expression.qlikview-vars"  
               }]            
         },
   "expressionWithoutEqualSign": {
@@ -35,7 +39,7 @@
               {        
                 "begin": "^(label|comment|condition|background):",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
-                "end": "(^(?=(definition|label|comment|condition|background))|^---$)",
+                "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "patterns": [{"name": "support.constant.qlikview-vars"}],
                 "name": "string.single.quoted.qlikview-vars" 
@@ -44,11 +48,20 @@
   "simpleField": {
     "patterns": [
       { 
-        "match": "(^(\\s)*(set|let|tag):(\\s)*)",
+        "match": "(^(\\s)*(set|let|search_tag):(\\s)*)",
         "name": "support.constant.qlikview-vars"
       }
     ]
   },
+  "newtag": {
+    "patterns": [
+      { 
+        "match": "(^(\\w)*(?!:))",
+        "name": "meta.newtag.qlikview-vars"
+      }
+    ]
+  },
+
 "yamlNewDocument": {
     "patterns": [
       { 

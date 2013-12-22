@@ -1,11 +1,13 @@
 {
-  "scope": "source.qlikview-vars" ,
+  "scope": "meta.newtag.qlikview-vars" ,
 
   "completions":
   [
     {"trigger": "comment:", "contents": "comment: $0"},
     {"trigger": "label:", "contents": "label: $0"},
     {"trigger": "background:", "contents": "background: $0"},
+    {"trigger": "let:", "contents": "let: $0"},
+    {"trigger": "search_tag:", "contents": "search_tag: $0"},
     {"trigger": "condition:", "contents": "condition: $0"}
   ]
 }
