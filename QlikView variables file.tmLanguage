@@ -16,7 +16,7 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#definition</string>
+			<string>#expression</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -32,18 +32,59 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#def</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#newtag</string>
 		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
-		<key>definition</key>
+		<key>def</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(definition|macro):</string>
+					<string>^#define\s+</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>support.constant.qlikview-vars</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>^(?=\S)</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>support.constant.qlikview-vars</string>
+						</dict>
+					</dict>
+					<key>name</key>
+					<string>meta.expression.qlikview-vars</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>source.qvs</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>expression</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>^(definition|macros|condition|background):</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>
@@ -80,7 +121,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(label|comment|condition|background):\s*(?==)</string>
+					<string>^(label|comment):\s*(?==)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>
@@ -117,7 +158,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(label|comment|condition|background):</string>
+					<string>^(label|comment):</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>

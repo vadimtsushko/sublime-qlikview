@@ -9,20 +9,23 @@ import csv
 EXT_QLIKVIEW_VARS  = ".qlikview-vars"
 EXT_QLIKVIEW_VARS_TABLE = ".csv"
 ALLOWED_TAGS = ('label','comment', 'definition','background','condition',
-    'search_tag','totals_label','separator')
+    'search_tag','totals_label','separator','#define')
 FIELDS_TO_SKIP = ('definition','tag','set','let','command','name', 'separator')
 NAME_MAP = {}
 
-line_template = re.compile(r'^(?P<key>\w*?):\s*(?P<val>.*)$')
+line_template = re.compile(r'^(?P<key>\w+?):\s+(?P<val>.+)$')
+define_template = re.compile(r'^#define\s*(?P<key>\w*)\s*(?P<val>.*)$')
 param_template = re.compile(r'^\s*\-\s*(?P<val>.*)$')
 
 linenum = 0
 defs = {}
 macro = []
 output = []
+define_directives = {}
 def parse_expression_file(path, name, text):
     global linenum
     global defs
+    global define_directives
     global macro
     global output
     global NAME_MAP
@@ -32,6 +35,7 @@ def parse_expression_file(path, name, text):
         NAME_MAP['separator'] = '.'
     expression = {}
     defs = {}
+    define_directives = {}
     linenum = 0
     macro = []
     output = []
@@ -67,6 +71,10 @@ def parse_expression_file(path, name, text):
             if  exp.get('macro') is None:
                 return 'Parsing error: Expression `%s` have not defined `definition` or `macro` property' % unicode(exp['name'])
             exp['definition'] = expand_macro()
+        local_def = exp['definition']
+        for k, v in define_directives.items():
+            local_def = local_def.replace(k,v)
+        exp['definition'] = local_def
         defs[exp['name']] = exp['definition']
         comment = exp.get('comment')
         tag = exp.get('search_tag')
@@ -87,9 +95,22 @@ def parse_expression_file(path, name, text):
         output.append(['%s %s' % (command.upper(), key) ,value, comment, priority])
     def parse_val(text):
         return text.strip()
+    def parse_define_directive(line):
+        match = define_template.match(line)
+        if match is None:
+            raise SyntaxError('Invalid define specification')
+        m = match.groupdict()
+        define_key = m['key'].strip()
+        define_val = m['val'].strip()
+        if (define_key == '' or define_val == ''):
+            raise SyntaxError('Invalid define specification')
+        define_directives[define_key] = define_val
     current_field = None
     for line in text.splitlines():
         linenum = linenum + 1
+        if (line.startswith('#')):
+            parse_define_directive(line)
+            continue
         match = line_template.match(line)
         if match is None:
             line = line.strip()
@@ -109,7 +130,8 @@ def parse_expression_file(path, name, text):
                         continue            
                 else:     
                     expression[current_field] += ' ' + line
-                    continue        
+                    continue
+            SyntaxError('Unexpected format')       
         m = match.groupdict()
         m['key'] = m['key'].strip()
         m['val'] = m['val'].strip()

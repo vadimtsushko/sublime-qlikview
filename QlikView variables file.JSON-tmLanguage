@@ -3,19 +3,19 @@
   "fileTypes": ["qlikview-vars"],
   "patterns": [
    { "include": "#yamlNewDocument"},    
-   { "include": "#definition"},
+   { "include": "#expression"},
    { "include": "#expressionWithEqualSign"}, 
    { "include": "#expressionWithoutEqualSign"},   
    { "include": "#simpleField"},
+   { "include": "#def"},
    { "include": "#newtag"}
-
   ],
   "repository": {
 
-"definition": {
+"def": {
       "patterns": [
               {        
-                "begin": "(definition|macro):",
+                "begin": "^#define\\s+",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
@@ -23,10 +23,11 @@
                 "name": "meta.expression.qlikview-vars"  
               }]            
         },
+
 "expressionWithEqualSign": {
       "patterns": [
               {        
-                "begin": "^(label|comment|condition|background):\\s*(?==)",
+                "begin": "^(label|comment):\\s*(?==)",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
@@ -37,7 +38,7 @@
   "expressionWithoutEqualSign": {
       "patterns": [
               {        
-                "begin": "^(label|comment|condition|background):",
+                "begin": "^(label|comment):",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
@@ -45,6 +46,18 @@
                 "name": "string.single.quoted.qlikview-vars" 
               }]            
         },
+"expression": {
+      "patterns": [
+              {        
+                "begin": "^(definition|macros|condition|background):",
+                "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
+                "end": "^(?=\\S)",
+                "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
+                "patterns": [{"include": "source.qvs"}],
+                "name": "meta.expression.qlikview-vars"  
+              }]            
+        },
+
   "simpleField": {
     "patterns": [
       { 
