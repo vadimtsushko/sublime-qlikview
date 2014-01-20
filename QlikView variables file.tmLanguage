@@ -207,7 +207,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(^(\s)*(set|let|search_tag):(\s)*)</string>
+					<string>(^(\s)*(set|let|tag):(\s)*)</string>
 					<key>name</key>
 					<string>support.constant.qlikview-vars</string>
 				</dict>

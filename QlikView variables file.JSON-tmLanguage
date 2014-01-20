@@ -61,7 +61,7 @@
   "simpleField": {
     "patterns": [
       { 
-        "match": "(^(\\s)*(set|let|search_tag):(\\s)*)",
+        "match": "(^(\\s)*(set|let|tag):(\\s)*)",
         "name": "support.constant.qlikview-vars"
       }
     ]

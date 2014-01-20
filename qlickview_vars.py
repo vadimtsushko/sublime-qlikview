@@ -9,7 +9,7 @@ import csv
 EXT_QLIKVIEW_VARS  = ".qlikview-vars"
 EXT_QLIKVIEW_VARS_TABLE = ".csv"
 ALLOWED_TAGS = ('label','comment', 'definition','background','condition',
-    'search_tag','totals_label','separator','#define')
+    'tag','totals_label','separator','#define')
 FIELDS_TO_SKIP = ('definition','tag','set','let','command','name', 'separator')
 NAME_MAP = {}
 
@@ -77,7 +77,7 @@ def parse_expression_file(path, name, text):
         exp['definition'] = local_def
         defs[exp['name']] = exp['definition']
         comment = exp.get('comment')
-        tag = exp.get('search_tag')
+        tag = exp.get('tag')
         command = exp.get('command')
         name = exp.get('name')
         if name == '__NAME_MAP__':

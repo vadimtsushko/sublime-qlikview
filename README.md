@@ -1,4 +1,4 @@
-sublime-qlikview (v0.1.0)
+sublime-qlikview (v0.1.7)
 ================
 
 Sublime Text 2 language plugin for QlikView scripts
