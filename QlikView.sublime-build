@@ -1,5 +1,5 @@
 {
-	"cmd": ["dart","c:\\Projects\\qvs_parser\\bin\\qvs.dart", "${file_name}"],
-    "file_regex": "File: (\\S+) row: ([0-9]+) col: ([0-9]+) message: (\\S+)",	
+	"cmd": ["${packages}\\QlikView Tools\\qvw_load.bat", "$file","$file_base_name", 
+    "c:\\Program Files\\QlikView\\qv.exe"],
     "selector": "source.qvs"	
 }
