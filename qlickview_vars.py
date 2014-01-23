@@ -3,7 +3,6 @@ import sublime_plugin
 import os
 import re
 import xml.etree.ElementTree as etree
-import StringIO
 import csv
 
 EXT_QLIKVIEW_VARS  = ".qlikview-vars"
@@ -159,7 +158,7 @@ def regenerate_tab_file_content(path, onload=False):
     try:
         f = open(path, 'r')
     except:
-        print "QlikViewExpression: Unable to read `%s`" % path
+        print ("QlikViewExpression: Unable to read `%s`" % path)
         return None
     else:
         read = f.read()
@@ -171,11 +170,11 @@ def regenerate_tab_file_content(path, onload=False):
         msg += " in file `%s` line: %d" % (path, linenum)
         if onload:
             # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
-            print "Error: " + msg
+            print("Error: " + msg)
         else:
             sublime.error_message(msg)
         if not isinstance(e, SyntaxError):
-            print e  # print the error only if it's not raised intentionally
+            print(e)  # print the error only if it's not raised intentionally
         return None
 
 def regenerate_expression_tab_file(path, onload=False, force=False):
@@ -188,9 +187,9 @@ def regenerate_expression_tab_file(path, onload=False, force=False):
  
     if write:
         try:
-            f = open(path, 'wb')
+            f = open(path, 'w')
         except:
-            print "QlikView expression: Unable to open `%s`" % path
+            print("QlikView expression: Unable to open `%s`" % path)
         else:
             writer = csv.writer(f)
             writer.writerow(['VariableName','VariableValue','Comments','Priority'])
