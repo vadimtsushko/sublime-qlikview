@@ -1,4 +1,4 @@
-QlikView Tools for Sublime Text 2/3 (v0.1.12)
+QlikView Tools for Sublime Text 2/3
 ================
 
 ##Sublime Text 2/3 language plugin for QlikView scripts

@@ -1,5 +1,9 @@
 ###Changelog
 
+####0.1.13
+
+- qvw_load.bat fixed. Build system now works with qvs scripts encoded with UTF8 with BOM
+
 ####0.1.12
 
 - Readme sections for  Build system usage and installation added
