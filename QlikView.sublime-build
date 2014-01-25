@@ -1,5 +1,4 @@
 {
-	"cmd": ["${packages}\\QlikView Tools\\qvw_load.bat", "$file","$file_base_name", 
-    "c:\\Program Files\\QlikView\\qv.exe"],
-    "selector": "source.qvs"	
+	"target": "qlikview_reload",
+  "selector": "source.qvs"	
 }

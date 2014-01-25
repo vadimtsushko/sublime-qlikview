@@ -1,5 +1,9 @@
 ###Changelog
 
+####0.1.14
+
+- Get rid of qvw_load.bat. Build system now runs custom-made command QlikviewReloadCommand. QlikView executable path can be changed in user settings
+
 ####0.1.13
 
 - qvw_load.bat fixed. Build system now works with qvs scripts encoded with UTF8 with BOM
