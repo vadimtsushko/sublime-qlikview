@@ -1,5 +1,9 @@
 ###Changelog
 
+####0.1.15
+
+- Bugfix for relative paths in shebang for Build system. Tested in QlikView Deployment Framework environment
+
 ####0.1.14
 
 - Get rid of qvw_load.bat. Build system now runs custom-made command QlikviewReloadCommand. QlikView executable path can be changed in user settings

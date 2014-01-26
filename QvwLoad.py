@@ -21,7 +21,7 @@ class QlikviewReloadCommand(sublime_plugin.WindowCommand):
         if os.path.exists(shebang):
           qvwFile = shebang
       else: 
-        testFile = os.path.join(shebang,baseName + '.qvw')
+        testFile = os.path.abspath(os.path.join(os.path.dirname(fileName),shebang,baseName + '.qvw'))
         if os.path.exists(testFile):
           qvwFile = testFile
     else:
