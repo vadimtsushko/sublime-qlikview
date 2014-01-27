@@ -1,0 +1,31 @@
+[
+	{
+		"args": null,
+		"command": "copy"
+	},
+	{
+		"args":
+		{
+			"characters": "Num"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"contents": "($0)"
+		},
+		"command": "insert_snippet"
+	},
+	{
+		"args": null,
+		"command": "paste"
+	},
+	{
+		"args":
+		{
+			"characters": ",'# ##0,00'"
+		},
+		"command": "insert"
+	}
+]

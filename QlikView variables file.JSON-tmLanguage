@@ -27,7 +27,7 @@
 "expressionWithEqualSign": {
       "patterns": [
               {        
-                "begin": "^(label|comment):\\s*(?==)",
+                "begin": "^(Label|Comment):\\s*(?==)",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
@@ -38,7 +38,7 @@
   "expressionWithoutEqualSign": {
       "patterns": [
               {        
-                "begin": "^(label|comment):",
+                "begin": "^(Label|Comment):",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
@@ -49,7 +49,7 @@
 "expression": {
       "patterns": [
               {        
-                "begin": "^(definition|macros|condition|background):",
+                "begin": "^(Definition|Macro|Condition|BackgroundColor):",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
@@ -61,7 +61,7 @@
   "simpleField": {
     "patterns": [
       { 
-        "match": "(^(\\s)*(set|let|tag):(\\s)*)",
+        "match": "(^(\\s)*(SET|LET|Tag|Description):(\\s)*)",
         "name": "support.constant.qlikview-vars"
       }
     ]
