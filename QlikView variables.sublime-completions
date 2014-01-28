@@ -3,12 +3,19 @@
 
   "completions":
   [
-    {"trigger": "comment:", "contents": "comment: $0"},
-    {"trigger": "label:", "contents": "label: $0"},
-    {"trigger": "background:", "contents": "background: $0"},
-    {"trigger": "let:", "contents": "let: $0"},
-    {"trigger": "search_tag:", "contents": "search_tag: $0"},
-    {"trigger": "condition:", "contents": "condition: $0"}
+    {"trigger": "Comment:", "contents": "Comment: $0"},
+    {"trigger": "Label:", "contents": "Label: $0"},
+    {"trigger": "BackgroundColor:", "contents": "BackgroundColor: $0"},
+    {"trigger": "Tag:", "contents": "Tag: $0"},
+    {"trigger": "FontColor:", "contents": "FontColor: $0"},
+    {"trigger": "TextFormat:", "contents": "TextFormat: $0"},
+    {"trigger": "Macro:", "contents": "Macro: $0"},
+    {"trigger": "Description:", "contents": "Description: $0"},
+    {"trigger": "EnableCondition:", "contents": "EnableCondition: $0"},
+    {"trigger": "ShowCondition:", "contents": "ShowCondition: $0"},
+    {"trigger": "SortBy:", "contents": "SortBy: $0"},
+    {"trigger": "VisualCueUpper:", "contents": "VisualCueUpper: $0"},
+    {"trigger": "VisualCueLower:", "contents": "VisualCueLower: $0"}
   ]
 }
 

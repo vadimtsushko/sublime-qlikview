@@ -1,4 +1,4 @@
-﻿# -*- encoding: UTF-8 -*-
+# -*- encoding: UTF-8 -*-
 import sublime
 import sublime_plugin
 import re

@@ -2,7 +2,7 @@
   "scopeName": "source.qlikview-vars", 
   "fileTypes": ["qlikview-vars"],
   "patterns": [
-   { "include": "#yamlNewDocument"},    
+   { "include": "#yamlNewDocument"},
    { "include": "#expression"},
    { "include": "#expressionWithEqualSign"}, 
    { "include": "#expressionWithoutEqualSign"},   
@@ -49,7 +49,7 @@
 "expression": {
       "patterns": [
               {        
-                "begin": "^(Definition|Macro|Condition|BackgroundColor):",
+                "begin": "^(Definition|Macro|Condition|BackgroundColor|FontColor|TextFormat|EnableCondition|ShowCondition|SortBy|VisualCueUpper|VisualCueLower):",
                 "beginCaptures": {"0": {"name": "support.constant.qlikview-vars"}},
                 "end": "^(?=\\S)",
                 "endCaptures": {"0": {"name": "support.constant.qlikview-vars"}},

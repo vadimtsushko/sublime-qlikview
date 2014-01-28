@@ -1,5 +1,12 @@
 ###Changelog
 
+####0.1.16
+
+- qlikview_vars.py refactored
+- Syntax for qlikview-vars files changed
+- Support for most properties of qlikview expression added.
+- Settings for configuration of derived variable names 
+
 ####0.1.15
 
 - Bugfix for relative paths in shebang for Build system. Tested in QlikView Deployment Framework environment

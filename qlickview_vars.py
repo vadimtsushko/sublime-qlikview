@@ -4,6 +4,17 @@ import os
 import re
 import xml.etree.ElementTree as etree
 import csv
+import sys
+
+def is_ST3():
+    ''' check if ST3 based on python version '''
+    version = sys.version_info
+    if isinstance(version, tuple):
+        version = version[0]
+    elif getattr(version, 'major', None):
+        version = version.major
+    return (version >= 3)
+
 
 class QlikViewVariableFile(sublime_plugin.EventListener):
     """Save variables in tabular format with extension EXT_QLIKVIEW_VARS_TABLE 
@@ -14,13 +25,14 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
 
     EXT_QLIKVIEW_VARS  = ".qlikview-vars"
     EXT_QLIKVIEW_VARS_TABLE = ".csv"
-    ALLOWED_TAGS = ('Label','Comment', 'Definition','Background','Condition',
-        'Tag','Separator','#define', 'Macro','Description')
+    ALLOWED_TAGS = ('Label','Comment', 'Definition','BackgroundColor','FontColor','TextFormat',
+        'Tag','Separator','#define', 'Macro','Description','EnableCondition',
+        'ShowCondition','SortBy','VisualCueUpper','VisualCueLower')
     FIELDS_TO_SKIP = ('Definition','Tag','SET','LET','command','name','separator','Macro','Description')
     NAME_MAP = {}
 
     line_template = re.compile(r'^(?P<key>\w+?):\s*(?P<val>.*)$')
-    define_template = re.compile(r'^#define\s*(?P<key>\w*)\s*(?P<val>.*)$')
+    define_template = re.compile(r'^#define\s*(?P<key>\S+)\s+(?P<val>.*)$')
     param_template = re.compile(r'^\s*\-\s*(?P<val>.*)$')
 
     linenum = 0
@@ -45,44 +57,43 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
             return path.replace(self.EXT_QLIKVIEW_VARS_TABLE, self.EXT_QLIKVIEW_VARS)
     def regenerate_tab_file_content(self,path, onload=False):
         (name, ext) = os.path.splitext(os.path.basename(path))
-        try:
+        f = None
+        if is_ST3():
             f = open(path, 'r', encoding="utf-8")
-        except:
-            print ("QlikViewExpression: Unable to read `%s`" % path)
-            return None
         else:
-            read = f.read()
-            f.close()
-        #self.parse_expression_file(path, name, read)
-        try:
-            self.parse_expression_file(path, name, read)
-        except Exception as e:
-            msg  = isinstance(e, SyntaxError) and str(e) or "Error parsing QlikView expression "
-            msg += " in file `%s` line: %d" % (path, self.linenum)
-            if onload:
-                # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
-                print("Error: " + msg)
-            else:
-                sublime.error_message(msg)
-            if not isinstance(e, SyntaxError):
-                print(e)  # print the error only if it's not raised intentionally
-            return None
+            f = open(path, 'rb')
+        read = f.read()
+        f.close()
+        self.parse_expression_file(path, name, read)
+        # try:
+        #     self.parse_expression_file(path, name, read)
+        # except Exception as e:
+        #     msg  = isinstance(e, SyntaxError) and str(e) or "Error parsing QlikView expression "
+        #     msg += " in file `%s` line: %d" % (path, self.linenum)
+        #     if onload:
+        #         # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
+        #         print("Error: " + msg)
+        #     else:
+        #         sublime.error_message(msg)
+        #     if not isinstance(e, SyntaxError):
+        #         print(e)  # print the error only if it's not raised intentionally
+        #     return None
 
     def regenerate_expression_tab_file(self,path, onload=False, force=False):
 
         (sane_path, path) = (path, self.swap_extension(path))
         # Generate XML
         self.regenerate_tab_file_content(sane_path, onload=onload)
-        try:
-            f = open(path, 'w+', encoding="utf-8", newline='')
-        except:
-            print("QlikView expression: Unable to open `%s`" % path)
+        f = None
+        if is_ST3():
+            f = open(path, 'w', encoding="utf-8", newline='')
         else:
-            writer = csv.writer(f)
-            writer.writerow(['VariableName','VariableValue','Comments','Priority'])
-            for row in self.output:
-                writer.writerow(row)
-            f.close()
+            f = open(path,'wb')
+        writer = csv.writer(f)
+        writer.writerow(['VariableName','VariableValue','Comments','Priority'])
+        for row in self.output:
+            writer.writerow(row)
+        f.close()
     def putRow(self, key, value, command, comment, priority):
             self.output.append(['%s %s' % (command.upper(), key) ,value, comment, priority])
     def parse_expression_file(self,path, name, text):
@@ -95,23 +106,24 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
         defs = {}
         define_directives = {}
         self.linenum = 0
-        macro = []
+        self.macro = []
         self.output = []
         def expand_macro():
-            if defs.get(macro[0]) is None:
-                raise SyntaxError('Parsing error: definition for macro `%s` is not found' % macro[0])
-            result = defs[macro[0]]
+            if defs.get(self.macro[0]) is None:
+                raise SyntaxError('Parsing error: definition for macro `%s` is not found' % self.macro[0])
+            result = defs[self.macro[0]]
             i = 1
-            while i < len(macro):
-                param = macro[i]
+            while i < len(self.macro):
+                param = self.macro[i]
                 subs = '$%s' % str(i)
                 if not subs in result:
-                    raise SyntaxError('Parsing error: definition for macro `%s` does not contain substring %s' % (macro[0],subs))    
+                    print('macro',self.macro)
+                    raise SyntaxError('Parsing error: definition for macro `%s` does not contain substring %s' % (self.macro[0],subs))    
                 result = result.replace(subs,param)
                 i = i + 1
             return result
         def init_expression():
-            macro = []
+            self.macro = []
             expression = {}
         def process_expression(exp):
             if exp == {}:
@@ -154,6 +166,7 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
             define_key = m['key'].strip()
             define_val = m['val'].strip()
             if (define_key == '' or define_val == ''):
+                print(line)
                 raise SyntaxError('Invalid define specification')
             define_directives[define_key] = define_val
         current_field = None
@@ -173,13 +186,13 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
                     continue
                 if current_field is not None:
                     if current_field == 'Macro':
-                        if len(macro) == 0:
-                           macro.append(expression['Macro']) 
-                        param_match = param_template.match(line)
+                        if len(self.macro) == 0:
+                           self.macro.append(expression['Macro']) 
+                        param_match = self.param_template.match(line)
                         if param_match is None:
-                            raise SyntaxError('Unexpected macro param format: "%s" for macro "%s"' % (line,macro[1]))
+                            raise SyntaxError('Unexpected macro param format: "%s" for macro "%s"' % (line,self.macro[1]))
                         else:
-                            macro.append(param_match.groupdict()['val'].strip())
+                            self.macro.append(param_match.groupdict()['val'].strip())
                             continue            
                     else:     
                         expression[current_field] += ' ' + line
@@ -196,8 +209,8 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
                 expression[m['key']] = m['val']
             else:
                 if m['key'] == 'Macro':
-                    macro.append(m['val'])
-                    expression['Macro'] = macro
+                    self.macro.append(m['val'])
+                    expression['Macro'] = self.macro
                 else:
                     raise SyntaxError('Unexpected QlikView expression property: "%s"' % m['key'])
         error = process_expression(expression)

@@ -84,7 +84,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(Definition|Macro|Condition|BackgroundColor):</string>
+					<string>^(Definition|Macro|Condition|BackgroundColor|FontColor|TextFormat|EnableCondition|ShowCondition|SortBy|VisualCueUpper|VisualCueLower):</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>
