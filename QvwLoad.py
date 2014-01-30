@@ -4,7 +4,7 @@ import sublime_plugin
 import re
 import os
 class QlikviewReloadCommand(sublime_plugin.WindowCommand):
-  def run(self):
+  def run(self, commandVariant=None):
     view = self.window.active_view()
     qv_executable = view.settings().get("qv_executable","c:\\Program Files\\QlikView\\qv.exe")
     firstLine = view.substr(view.line(0))
@@ -17,7 +17,6 @@ class QlikviewReloadCommand(sublime_plugin.WindowCommand):
       shebang = re.sub(r'\/\/\#\!','',firstLine)
       if shebang.endswith('.qvw'):
         testFile = shebang
-        print('HEARE')
         if os.path.exists(shebang):
           qvwFile = shebang
       else: 
@@ -32,4 +31,9 @@ class QlikviewReloadCommand(sublime_plugin.WindowCommand):
       sublime.error_message('File not found: %s' % testFile)
     else:
       sublime.status_message('Reloading file %s' % qvwFile)
-      self.window.run_command("exec", { "cmd": [qv_executable,"/R","/nodata",qvwFile]})
+      print("commandVariant", commandVariant)
+      if commandVariant is None:
+        self.window.run_command("exec", { "cmd": [qv_executable,"/R","/nodata",qvwFile]})
+      else:
+        self.window.run_command("exec", { "cmd": ["cmd","/C",qv_executable,qvwFile]})
+

@@ -6,7 +6,7 @@
 	{
 		"args":
 		{
-			"characters": "Num"
+			"characters": "Money"
 		},
 		"command": "insert"
 	},

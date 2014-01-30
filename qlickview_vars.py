@@ -64,20 +64,20 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
             f = open(path, 'rb')
         read = f.read()
         f.close()
-        self.parse_expression_file(path, name, read)
-        # try:
-        #     self.parse_expression_file(path, name, read)
-        # except Exception as e:
-        #     msg  = isinstance(e, SyntaxError) and str(e) or "Error parsing QlikView expression "
-        #     msg += " in file `%s` line: %d" % (path, self.linenum)
-        #     if onload:
-        #         # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
-        #         print("Error: " + msg)
-        #     else:
-        #         sublime.error_message(msg)
-        #     if not isinstance(e, SyntaxError):
-        #         print(e)  # print the error only if it's not raised intentionally
-        #     return None
+#        self.parse_expression_file(path, name, read)
+        try:
+            self.parse_expression_file(path, name, read)
+        except Exception as e:
+            msg  = isinstance(e, SyntaxError) and str(e) or "Error parsing QlikView expression "
+            msg += " in file `%s` line: %d" % (path, self.linenum)
+            if onload:
+                # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
+                print("Error: " + msg)
+            else:
+                sublime.error_message(msg)
+            if not isinstance(e, SyntaxError):
+                print(e)  # print the error only if it's not raised intentionally
+            return None
 
     def regenerate_expression_tab_file(self,path, onload=False, force=False):
 

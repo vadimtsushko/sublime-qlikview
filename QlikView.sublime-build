@@ -1,4 +1,11 @@
 {
 	"target": "qlikview_reload",
-  "selector": "source.qvs"	
+  	"selector": "source.qvs",
+  	"variants": [
+  		{
+  			"name": "Run",
+  			"target": "qlikview_reload",
+  			"commandVariant": "open"
+  		}	
+  	]
 }
