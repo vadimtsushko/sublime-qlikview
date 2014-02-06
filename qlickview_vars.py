@@ -15,8 +15,13 @@ def is_ST3():
         version = version.major
     return (version >= 3)
 
-
-class QlikViewVariableFile(sublime_plugin.EventListener):
+class QlikviewVariableFileListener(sublime_plugin.EventListener):
+    EXT_QLIKVIEW_VARS  = ".qlikview-vars"
+    def on_post_save(self, view):
+        fn = view.file_name()
+        if (fn.endswith(self.EXT_QLIKVIEW_VARS)):
+            view.run_command('qlikview_variable_file')
+class QlikviewVariableFileCommand(sublime_plugin.WindowCommand):
     """Save variables in tabular format with extension EXT_QLIKVIEW_VARS_TABLE 
     along with current expression file in YAML like format (extentsion EXT_QLIKVIEW_VARS)
 
@@ -42,7 +47,8 @@ class QlikViewVariableFile(sublime_plugin.EventListener):
     define_directives = {}
     moduleSettings = None
 
-    def on_post_save(self, view):
+    def run(self, view):
+        view = self.window.active_view()
         fn = view.file_name()
         if (fn.endswith(self.EXT_QLIKVIEW_VARS)):
             self.moduleSettings = view.settings()
