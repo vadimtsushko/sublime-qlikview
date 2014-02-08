@@ -4,10 +4,10 @@ import sublime_plugin
 import os
 import collections
 from xml.dom import minidom
+import sys
 
 class QvdField:
     fieldName = ''
-    fieldType = 'UNKNOWN'
     uniqValues = 0
     memoryUsage = 0
 class QvdTable:
@@ -142,7 +142,6 @@ class QvdViewerCommand(sublime_plugin.TextCommand):
                 continue
             l = v.line(sublime.Region(0,0))
             line = v.substr(l)
-            print(line)
             if (line == viewHeader):
                 window.focus_view(v)
                 window.run_command('close')
