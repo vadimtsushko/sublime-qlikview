@@ -40,7 +40,7 @@ class QlikviewQvdFileListener(sublime_plugin.EventListener):
         fn = view.file_name()
         if (fn is None):
             return
-        if (fn.endswith(self.EXT_QLIKVIEW_QVD)):
+        if (fn.upper().endswith(self.EXT_QLIKVIEW_QVD)):
             view.run_command('qvd_viewer',{'cmd':''})
 class QvdViewerCommand(sublime_plugin.TextCommand):
     moduleSettings = None
