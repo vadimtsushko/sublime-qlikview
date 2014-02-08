@@ -5,15 +5,6 @@ import os
 import collections
 from xml.dom import minidom
 
-def is_ST3():
-    ''' check if ST3 based on python version '''
-    version = sys.version_info
-    if isinstance(version, tuple):
-        version = version[0]
-    elif getattr(version, 'major', None):
-        version = version.major
-    return (version >= 3)
-
 class QvdField:
     fieldName = ''
     fieldType = 'UNKNOWN'
@@ -37,11 +28,22 @@ class QlikviewQvdFileListener(sublime_plugin.EventListener):
 
     EXT_QLIKVIEW_QVD  = ".QVD"
     def on_activated(self,view):
+        if not is_ST3():
+            return
         fn = view.file_name()
         if (fn is None):
             return
         if (fn.upper().endswith(self.EXT_QLIKVIEW_QVD)):
             view.run_command('qvd_viewer',{'cmd':''})
+    def is_ST3(self):
+        ''' check if ST3 based on python version '''
+        version = sys.version_info
+        if isinstance(version, tuple):
+            version = version[0]
+        elif getattr(version, 'major', None):
+            version = version.major
+        return (version >= 3)
+
 class QvdViewerCommand(sublime_plugin.TextCommand):
     moduleSettings = None
     edit = None
