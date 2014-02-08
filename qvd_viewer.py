@@ -2,11 +2,8 @@
 import sublime
 import sublime_plugin
 import os
-import re
-import xml.etree.ElementTree as etree
-import csv
-import sys
 import collections
+from xml.dom import minidom
 
 def is_ST3():
     ''' check if ST3 based on python version '''
@@ -16,6 +13,20 @@ def is_ST3():
     elif getattr(version, 'major', None):
         version = version.major
     return (version >= 3)
+
+class QvdField:
+    fieldName = ''
+    fieldType = 'UNKNOWN'
+    uniqValues = 0
+    memoryUsage = 0
+class QvdTable:
+    noOfRecords = 0
+    tableName = ''
+    creatorDoc = ''
+    createdTime = ''
+    fields = []
+
+
 
 class QlikviewQvdFileListener(sublime_plugin.EventListener):
     """Save variables in tabular format with extension EXT_QLIKVIEW_VARS_TABLE 
@@ -30,22 +41,19 @@ class QlikviewQvdFileListener(sublime_plugin.EventListener):
         if (fn is None):
             return
         if (fn.endswith(self.EXT_QLIKVIEW_QVD)):
-            pos = view.find('^\\s+</QvdTableHeader>', 0)
-            pos = pos.b
-            print(pos)
-            view.run_command('qvd_viewer')
+            view.run_command('qvd_viewer',{'cmd':''})
 class QvdViewerCommand(sublime_plugin.TextCommand):
     moduleSettings = None
     edit = None
-    def run(self, edit):
+    path = ''
+    def run(self, edit, cmd=''):
             self.edit = edit
+            self.path = self.view.file_name()
+            sublime.active_window().run_command('close')
+            # view.run_command('close')
+            self.view = sublime.active_window().new_file()
             view = self.view
-            # self.moduleSettings = view.settings()
             view.set_scratch(True)
-            # view.set_read_only(True)
-            all_region = sublime.Region(0,view.size())
-            view.erase(edit,all_region)
-            path = view.file_name()
             token = collections.deque()
             tokenMarker = collections.deque([b'<',b'/',b'Q',b'v',b'd',b'T',b'a',b'b',b'l',b'e',b'H',b'e',b'a',b'd',b'e',b'r',b'>'])
             token = collections.deque(tokenMarker)
@@ -53,11 +61,11 @@ class QvdViewerCommand(sublime_plugin.TextCommand):
             buff = collections.deque()
             n = 0
             headerFound = False
-            with open(path, 'rb') as f:
+            with open(self.path, 'rb') as f:
                 while True:
                     char = f.read(1)
                     n = n + 1
-                    if n > 10000:
+                    if n > 100000:
                         break
                     if char =='':
                         break
@@ -70,21 +78,47 @@ class QvdViewerCommand(sublime_plugin.TextCommand):
             if not headerFound:
                 self.addLine('ERROR: QvdFile header have not been recognized')
                 return
-            
-            # self.view.insert(edit, 0, 'TOKEN: ' + str(token))
-            # self.view.insert(edit, view.size(), '\n')
-            #self.view.insert(edit, view.size(), str(buff))
             buffString = b''.join(buff)
-            from xml.dom import minidom
             xml = minidom.parseString(buffString)
-            #print(xmldoc)
-            t = self.getValue(xml,"TableName")
-            records = self.getValue(xml,"NoOfRecords")
-            line = "Table %s. %s records" % (t,records)
-            self.view.insert(edit, view.size(), line)
-
+            self.parseHeader(xml)
+    def parseHeader(self, xml):
+        table = QvdTable()
+        table.fields = []
+        table.tableName = self.getValue(xml,"TableName")
+        table.noOfRecords = self.getValue(xml,"NoOfRecords")
+        table.createdTime = self.getValue(xml,"CreateUtcTime")
+        for fieldXml in xml.getElementsByTagName("QvdFieldHeader"):
+            field = QvdField()
+            field.fieldName = self.getValue(fieldXml,"FieldName")
+            field.uniqValues =  self.getValue(fieldXml,"NoOfSymbols")
+            field.memoryUsage = self.getValue(fieldXml,"Length")
+            field.fieldType = 'Number'
+            if self.getValue(fieldXml,"NumberFormat/Type") == "UNKNOWN":
+                field.fieldType = "String"
+            table.fields.append(field)
+        viewHeader =  '###Table ' + table.tableName
+        self.addLine(viewHeader)
+        line = '%s records. QVD created at %s' % (table.noOfRecords,table.createdTime)
+        self.addLine(line)
+        self.addLine('')
+        for field in table.fields:
+            line = "- **%s**. Unique values: %s, Memory usage: %s" % (field.fieldName, field.uniqValues, field.memoryUsage)
+            self.addLine(line)
+        self.addLine('')
+        self.addLine('```QlikView')
+        self.addLine('')
+        self.addLine('LOAD')
+        comma = ','
+        for field in table.fields:
+            if field.fieldName == table.fields[-1].fieldName:
+                comma = ''
+            self.addLine('  ' + field.fieldName + comma)
+        self.addLine('    FROM [' + self.path+'] (QVD);')
+        self.addLine('')
+        self.addLine('```')
+        self.closeOthers(viewHeader)
     def addLine(self,line):
-        self.view.insert(self.edit, self.view.size(), line)
+        self.view.insert(self.edit, self.view.size(), line + '\n')
     def getValue(self,xml,tagName):
         nodeList = xml.getElementsByTagName(tagName)
         if len(nodeList) == 0:
@@ -92,3 +126,16 @@ class QvdViewerCommand(sublime_plugin.TextCommand):
         tag = nodeList[0].toxml()
         xmlData=tag.replace('<'+tagName+'>','').replace('</'+tagName+'>','')
         return xmlData
+    def closeOthers(self,viewHeader):
+        window = self.view.window()
+        myId = self.view.id()
+        for v in window.views():
+            if v.id() == myId:
+                continue
+            l = v.line(sublime.Region(0,0))
+            line = v.substr(l)
+            print(line)
+            if (line == viewHeader):
+                window.focus_view(v)
+                window.run_command('close')
+                window.focus_view(self.view)
