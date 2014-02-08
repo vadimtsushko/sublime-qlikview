@@ -1,8 +1,8 @@
 # -*- encoding: UTF-8 -*-
 import sublime
 import sublime_plugin
-import re
 import os
+import re
 class QlikviewReloadCommand(sublime_plugin.WindowCommand):
   def run(self, commandVariant=None):
     view = self.window.active_view()
