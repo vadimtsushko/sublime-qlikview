@@ -96,14 +96,20 @@ class QvdViewerCommand(sublime_plugin.TextCommand):
             if self.getValue(fieldXml,"NumberFormat/Type") == "UNKNOWN":
                 field.fieldType = "String"
             table.fields.append(field)
-        viewHeader =  '###Table ' + table.tableName
+        viewHeader =  table.tableName + '.MD'
         self.addLine(viewHeader)
+        self.addLine('---')
+        self.addLine('')
         line = '%s records. QVD created at %s' % (table.noOfRecords,table.createdTime)
         self.addLine(line)
+        self.addLine('')
+        self.addLine('###Fields:')
         self.addLine('')
         for field in table.fields:
             line = "- **%s**. Unique values: %s, Memory usage: %s" % (field.fieldName, field.uniqValues, field.memoryUsage)
             self.addLine(line)
+        self.addLine('')
+        self.addLine('####Sample load statement:')
         self.addLine('')
         self.addLine('```QlikView')
         self.addLine('')
