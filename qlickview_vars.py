@@ -271,12 +271,16 @@ class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
     edit = None
     path = ''
     reader = ''
+    VAR_PATTERN = re.compile('\\$\\((?P<key>[^=]\\S+)\\)')
     def run(self, edit):
         self.edit = edit
         self.view = sublime.active_window().active_view()
         self.path = self.view.file_name()
         view = self.view
         fn = view.file_name()
+        if fn is None:
+            print ('Can not test unsaved document')
+            return
         if not fn.lower().endswith(EXT_QLIKVIEW_VARS):
             return;
         self.moduleSettings = view.settings()
@@ -289,16 +293,21 @@ class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
         view = self.view
         view.set_scratch(True)
         (file_name, ext) = os.path.splitext(os.path.basename(fn))
-        self.add_line(file_name+'.qlikview-vars-expand')
-        self.add_line('')
+        to_expand = []
         for row in reader.output:
-            if '.' in row[1]:
-                continue
-            self.add_line('---')
-            self.add_line('LET: ' + row[1])
-            self.add_line('Definition: '+ row[2])
-            view.set_syntax_file(syntax)
-            self.close_others(file_name+'.qlikview-vars-expand')
+            to_expand.append([row[1],row[2]])
+        expander = QlikViewCommandExpander(to_expand)
+        expander.expand()
+        # self.add_line(file_name+'.qlikview-vars-expand')
+        # self.add_line('')
+        # for row in reader.output:
+        #     if '.' in row[1]:
+        #         continue
+        #     self.add_line('---')
+        #     self.add_line('LET: ' + row[1])
+        #     self.add_line('Definition: '+ row[2])
+        #     view.set_syntax_file(syntax)
+        #     self.close_others(file_name+'.qlikview-vars-expand')
     def add_line(self,line):
         self.view.insert(self.edit, self.view.size(), line + '\n')
     def close_others(self,viewHeader):
@@ -313,3 +322,23 @@ class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
                 window.focus_view(v)
                 window.run_command('close')
                 window.focus_view(self.view)
+class QlikViewCommandExpander:
+    expressions = []
+    exp_dict = {}
+    VAR_PATTERN = re.compile('\\$\\((?P<key>[^=]\\S+)\\)')
+    def __init__(self, expressions):
+        self.expressions = list(expressions)
+        for exp in self.expressions:
+            self.exp_dict[exp[0]] = exp[1]
+    def expand(self):
+        for exp in self.expressions:
+            expanded = exp[1]
+            print('To expand ' + expanded)
+            for match in self.VAR_PATTERN.finditer(exp[1]):
+                variable = match.groupdict()['key']
+                replace_string = self.exp_dict[variable]
+                if replace_string is None:
+                    print('Not found variable: ' + variable)
+                else:
+                    expanded = expanded.replace('$(%s)'%variable, replace_string) 
+            print(expanded)
