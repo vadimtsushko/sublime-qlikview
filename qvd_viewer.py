@@ -28,7 +28,7 @@ class QlikviewQvdFileListener(sublime_plugin.EventListener):
 
     EXT_QLIKVIEW_QVD  = ".QVD"
     def on_activated(self,view):
-        if not is_ST3():
+        if not self.is_ST3():
             return
         fn = view.file_name()
         if (fn is None):
