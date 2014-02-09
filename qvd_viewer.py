@@ -17,8 +17,6 @@ class QvdTable:
     createdTime = ''
     fields = []
 
-
-
 class QlikviewQvdFileListener(sublime_plugin.EventListener):
     """Save variables in tabular format with extension EXT_QLIKVIEW_VARS_TABLE 
     along with current expression file in YAML like format (extentsion EXT_QLIKVIEW_VARS)
