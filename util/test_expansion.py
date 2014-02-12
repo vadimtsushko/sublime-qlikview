@@ -1,15 +1,14 @@
 import unittest
-from ..utils.qvvars import *
-class TestExpansion(unittest.TestCase):
+from qvvars import *
+class TestExpand(unittest.TestCase):
 
     # def setUp(self):
     #     self.seq = range(10)
 
-    # def test_shuffle(self):
-    #     # make sure the shuffled sequence does not lose any elements
-    #     random.shuffle(self.seq)
-    #     self.seq.sort()
-    #     self.assertEqual(self.seq, range(10))
+    def test_readerDummmy(self):
+        reader = QvVarFileReader({})
+        reader.parse_content('')
+
 
     #     # should raise an exception for an immutable sequence
     #     self.assertRaises(TypeError, random.shuffle, (1,2,3))
@@ -23,6 +22,12 @@ class TestExpansion(unittest.TestCase):
     #         random.sample(self.seq, 20)
     #     for element in random.sample(self.seq, 5):
     #         self.assertTrue(element in self.seq)
+
+def testExpansion(content):
+    reader = QvVarFileReader({})
+    reader.parsedContent(content)
+    
+
 
 if __name__ == '__main__':
     unittest.main()
