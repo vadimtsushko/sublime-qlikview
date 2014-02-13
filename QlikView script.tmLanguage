@@ -50,9 +50,44 @@
 			<key>include</key>
 			<string>#braces</string>
 		</dict>
+		<dict>
+			<key>include</key>
+			<string>#subroutine</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#null_assignment</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#assignment</string>
+		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
+		<key>assignment</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.qvs</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.qvs</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^\s*(LET|SET)\s+((\w|\.)+\s*=)</string>
+				</dict>
+			</array>
+		</dict>
 		<key>braces</key>
 		<dict>
 			<key>patterns</key>
@@ -162,12 +197,12 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.function.qvs</string>
+							<string>support.type.qvs</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.function.qvs</string>
+							<string>support.type.qvs</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -177,7 +212,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.function.qvs</string>
+							<string>support.type.qvs</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -232,7 +267,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(?i)(^|\s)\b(NOT|OR|AND|ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LET|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|SUB|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|SET|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY|WITH)\b</string>
+					<string>(?i)(^|\s)\b(NOT|OR|AND|ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY|WITH)\b</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -245,6 +280,24 @@
 					</dict>
 					<key>match</key>
 					<string>(?i)(^|\s)(LEFT|RIGHT|IF|REPLACE)(?!\()</string>
+				</dict>
+			</array>
+		</dict>
+		<key>null_assignment</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.qvs</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^\s*((LET|SET)\s+(\w|\.)+)\s*=\s*;</string>
 				</dict>
 			</array>
 		</dict>
@@ -358,13 +411,39 @@
 				</dict>
 			</array>
 		</dict>
+		<key>subroutine</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.qvs entity.name.type.qvs</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^\s*(SUB\s+(\w|\.)+)(\s*$|\([^)]+\)\s*$)</string>
+				</dict>
+			</array>
+		</dict>
 		<key>tableIdentifiers</key>
 		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>captures</key>
+					<dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.qvs</string>
+						</dict>
+					</dict>
 					<key>match</key>
-					<string>(^(\s)*(\w|\.)+:(\s)*)</string>
+					<string>^(\s)*(\w+:)(\s)*$</string>
 					<key>name</key>
 					<string>support.constant.qvs</string>
 				</dict>
