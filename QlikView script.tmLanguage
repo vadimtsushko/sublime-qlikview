@@ -80,11 +80,11 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.type.qvs</string>
+							<string>entity.name.type.variable.qvs</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>^\s*(LET|SET)\s+((\w|\.)+\s*=)</string>
+					<string>^\s*(LET|SET)\s+((\w|\.)+)\s*=</string>
 				</dict>
 			</array>
 		</dict>
@@ -197,12 +197,12 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>support.type.qvs</string>
+							<string>entity.other.attribute-name.qvs</string>
 						</dict>
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>support.type.qvs</string>
+							<string>entity.other.attribute-name.qvs</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -212,7 +212,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>support.type.qvs</string>
+							<string>entity.other.attribute-name.qvs</string>
 						</dict>
 					</dict>
 					<key>patterns</key>
@@ -421,11 +421,16 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.qvs entity.name.type.qvs</string>
+							<string>keyword.control.qvs</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>support.function entity.name.type.subroutine.qvs</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>^\s*(SUB\s+(\w|\.)+)(\s*$|\([^)]+\)\s*$)</string>
+					<string>^\s*(SUB)\s+((?:\w|\.)+)</string>
 				</dict>
 			</array>
 		</dict>
@@ -439,11 +444,11 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.type.qvs</string>
+							<string>support.constant.qvs entity.name.type.table.qvs</string>
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>^(\s)*(\w+:)(\s)*$</string>
+					<string>^(\s)*(\w+):(\s)*$</string>
 					<key>name</key>
 					<string>support.constant.qvs</string>
 				</dict>
