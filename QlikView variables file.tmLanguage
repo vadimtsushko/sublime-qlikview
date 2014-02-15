@@ -12,6 +12,10 @@
 	<array>
 		<dict>
 			<key>include</key>
+			<string>#name</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#yamlNewDocument</string>
 		</dict>
 		<dict>
@@ -189,6 +193,29 @@
 				</dict>
 			</array>
 		</dict>
+		<key>name</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>support.constant.qlikview-vars</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>support.class.qlikview-vars entity.name.type.expression.qlikview-vars</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(^(\s)*(SET|LET):(\s)*)</string>
+				</dict>
+			</array>
+		</dict>
 		<key>newtag</key>
 		<dict>
 			<key>patterns</key>
@@ -207,7 +234,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(^(\s)*(SET|LET|Tag|Description):(\s)*)</string>
+					<string>(^(\s)*(Tag|Description):(\s)*)</string>
 					<key>name</key>
 					<string>support.constant.qlikview-vars</string>
 				</dict>

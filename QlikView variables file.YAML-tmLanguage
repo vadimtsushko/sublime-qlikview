@@ -5,6 +5,9 @@ fileTypes: [qlikview-vars]
 uuid: 6b77dc03-7003-41f4-a9f6-287849f88d5f
 
 patterns:
+
+- include: '#name'
+
 - include: '#yamlNewDocument'
 
 - include: '#expression'
@@ -73,10 +76,17 @@ repository:
     - name: meta.newtag.qlikview-vars
       match: (^(\w)*(?!:))
 
+  name:
+    patterns:
+    - match: (^(\s)*(SET|LET):(\s)*)
+      captures:
+        '1': {name: support.constant.qlikview-vars}
+        '2': {name: support.class.qlikview-vars entity.name.type.expression.qlikview-vars}
+
   simpleField:
     patterns:
     - name: support.constant.qlikview-vars
-      match: (^(\s)*(SET|LET|Tag|Description):(\s)*)
+      match: (^(\s)*(Tag|Description):(\s)*)
 
   yamlNewDocument:
     patterns:

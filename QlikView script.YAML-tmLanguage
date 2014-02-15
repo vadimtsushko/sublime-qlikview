@@ -5,6 +5,14 @@ fileTypes: [qvs]
 uuid: 6b77dc03-7003-41f4-a9f6-287849f88d4f
 
 patterns:
+- include: '#subroutine'
+
+- include: '#null_assignment'
+
+- include: '#assignment'
+
+- include: '#tab'
+
 - include: '#comments'
 
 - include: '#strings'
@@ -25,11 +33,6 @@ patterns:
 
 - include: '#braces'
 
-- include: '#subroutine'
-
-- include: '#null_assignment'
-
-- include: '#assignment'
 
 repository:
   braces:
@@ -88,7 +91,7 @@ repository:
 
   keyword:
     patterns:
-    - match: (?i)(^|\s)\b(NOT|OR|AND|ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY|WITH)\b
+    - match: (?i)(^|\s)\b(SUB|NOT|OR|AND|ADD|ALIAS|ASC|BINARY|BUFFER|BUNDLE|CALL|COMMENT|CONCATENATE|CONNECT|CROSSTABLE|DESC|DIRECTORY|DISCONNECT|DO|DROP|EXECUTE|EACH|END|EXIT|FIELD|FIELDS|FIRST|FOR|FORCE|GENERIC|HIERARCHY|HIERARCHYBELONGSTO|THEN|ELSEIF|ELSE|ENDIF|IMAGE_SIZE|INFO|INNER|INPUTFIELD|INTERVALMATCH|JOIN|KEEP|LOAD|LOOSEN|MAPPING|MAP|USING|NOCONCATENATE|NULLASVALUE|NULLASNULL|OUTER|QUALIFY|RENAME|RIGHT|SAMPLE|SECTION|SELECT|SEMANTIC|SEMANTIC|SLEEP|SQL|SQLCOLUMNS|SQLTABLES|SQLTYPES|STAR|STORE|ENDSUB|SWITCH|CASE|DEFAULT|ENDSWITCH|TAG|TRACE|UNLESS|UNMAP|UNQUALIFY|UNTAG|WHEN|LOOP|NEXT|SCRIPT|TABLE|FROM|INTO|AS|INTO|TO|STEP|AUTOGENERATE|RESIDENT|WHILE|WHERE|ORDER|GROUP|BY|WITH)\b
       captures:
         '2': {name: keyword.control.qvs}
     - match: (?i)(^|\s)(LEFT|RIGHT|IF|REPLACE)(?!\()
@@ -104,23 +107,29 @@ repository:
 
   subroutine:
     patterns:
-    - match: ^\s*(SUB)\s+((?:\w|\.)+)
+    - match: ^\s*([Ss][Uu][Bb])\s+((?:\w|\.)+)
       captures:
        '1': {name: keyword.control.qvs}
-       '2': {name: support.function entity.name.type.subroutine.qvs}
+       '2': {name: support.class entity.name.type.subroutine.qvs}
 
   null_assignment:
     patterns:
-    - match: ^\s*((LET|SET)\s+(\w|\.)+)\s*=\s*;
+    - match: ^\s*([LlSs][Ee][Tt])\s+(\w|\.)+\s*=\s*;
       captures:
        '1': {name: keyword.control.qvs}
   assignment:
     patterns:
-    - match: ^\s*(LET|SET)\s+((\w|\.)+)\s*=
+    - match: ^\s*([LlSs][Ee][Tt])\s+((\w|\.)+)\s*=
       captures:
        '1': {name: keyword.control.qvs}
        '2': {name: entity.name.type.variable.qvs}
 
+  tab:
+    patterns:
+    - match: ^(///\$tab) (.+)$
+      captures:
+       '1': {name: comment.line.double-dash.source.qvs}
+       '2': {name: support.constant.qvs meta.tab.qvs}
   operators:
     patterns:
     - name: keyword.control.qvs

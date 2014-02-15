@@ -11,7 +11,7 @@
     <key>showInSymbolList</key>
     <integer>1</integer>
     <key>symbolTransformation</key>
-    <string>s/.*/    $0 \(Var\)/</string>
+    <string>s/.*/        $0 \(Var\)/</string>
   </dict>
   <key>uuid</key>
   <string>c32ba3e2-4f2f-4ecf-922a-5b92ba7f320f</string>
