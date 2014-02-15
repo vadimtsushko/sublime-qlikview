@@ -1,12 +1,19 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: QlikView vars file
-scopeName: source.qlikview-vars
 fileTypes: [qlikview-vars]
+foldingStartMarker: ^#SECTION
+foldingStopMarker: ^#ENDSECTION
+keyEquivalent: ^~J
+
+scopeName: source.qlikview-vars
+
 uuid: 6b77dc03-7003-41f4-a9f6-287849f88d5f
 
 patterns:
 
-- include: '#name'
+- include: '#expressionName'
+
+- include: '#section'
 
 - include: '#yamlNewDocument'
 
@@ -76,12 +83,12 @@ repository:
     - name: meta.newtag.qlikview-vars
       match: (^(\w)*(?!:))
 
-  name:
+  expressionName:
     patterns:
-    - match: (^(\s)*(SET|LET):(\s)*)
+    - match: ^\s*(SET|LET):\s*(\w+)\s*$
       captures:
         '1': {name: support.constant.qlikview-vars}
-        '2': {name: support.class.qlikview-vars entity.name.type.expression.qlikview-vars}
+        '2': {name: support.variable.qlikview-vars entity.name.type.expression.qlikview-vars}
 
   simpleField:
     patterns:
@@ -92,5 +99,9 @@ repository:
     patterns:
     - name: support.constant.qlikview-vars
       match: ^---$
-    - name: support.constant.qlikview-vars
-      match: ^\.\.\.$
+  section:
+    patterns:
+    - match: ^(#SECTION )\s*(.+)$
+      captures:
+        '1': {name: comment.line.double-dash.qlikview-vars}
+        '2': {name: support.variable.qlikview-vars meta.name.section.qlikview-vars}

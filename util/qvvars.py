@@ -34,6 +34,7 @@ class QvVarFileReader:
     def put_row(self, key, value, command, comment, priority):
             self.output.append([command.upper(), key ,value, comment, priority])
     def parse_content(self,text):
+        print('IN PARSE_CONTENT')
         self.NAME_MAP = {}
         mappings = self.moduleSettings.get('mappings',{})
         for tag in self.ALLOWED_TAGS:
@@ -109,8 +110,11 @@ class QvVarFileReader:
         current_field = None
         for line in text.splitlines():
             self.linenum = self.linenum + 1
-            if (line.startswith('#')):
+            print("%s %s" % (self.linenum, line))
+            if (line.startswith('#define')):
                 parse_define_directive(line)
+                continue
+            if line.strip()=='':
                 continue
             match = self.line_template.match(line)
             if match is None:

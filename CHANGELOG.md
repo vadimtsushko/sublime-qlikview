@@ -1,5 +1,18 @@
 ###Changelog
 
+####0.1.19
+
+- Symbols in qvs: suroutines, variables and table identifiers. Tabs are local symbols
+- Symbols in expression files: expression names and \#SECTION tags
+
+####0.1.18
+
+- QVD Viewer plugin added. (ST3 only)
+
+####0.1.17
+
+- Expression file plugin refactored
+
 ####0.1.16
 
 - qlikview_vars.py refactored

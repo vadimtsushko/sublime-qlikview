@@ -6,13 +6,23 @@
 	<array>
 		<string>qlikview-vars</string>
 	</array>
+	<key>foldingStartMarker</key>
+	<string>^#SECTION</string>
+	<key>foldingStopMarker</key>
+	<string>^#ENDSECTION</string>
+	<key>keyEquivalent</key>
+	<string>^~J</string>
 	<key>name</key>
 	<string>QlikView vars file</string>
 	<key>patterns</key>
 	<array>
 		<dict>
 			<key>include</key>
-			<string>#name</string>
+			<string>#expressionName</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#section</string>
 		</dict>
 		<dict>
 			<key>include</key>
@@ -119,6 +129,29 @@
 				</dict>
 			</array>
 		</dict>
+		<key>expressionName</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>support.constant.qlikview-vars</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>support.variable.qlikview-vars entity.name.type.expression.qlikview-vars</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^\s*(SET|LET):\s*(\w+)\s*$</string>
+				</dict>
+			</array>
+		</dict>
 		<key>expressionWithEqualSign</key>
 		<dict>
 			<key>patterns</key>
@@ -193,29 +226,6 @@
 				</dict>
 			</array>
 		</dict>
-		<key>name</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>support.constant.qlikview-vars</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>support.class.qlikview-vars entity.name.type.expression.qlikview-vars</string>
-						</dict>
-					</dict>
-					<key>match</key>
-					<string>(^(\s)*(SET|LET):(\s)*)</string>
-				</dict>
-			</array>
-		</dict>
 		<key>newtag</key>
 		<dict>
 			<key>patterns</key>
@@ -225,6 +235,29 @@
 					<string>(^(\w)*(?!:))</string>
 					<key>name</key>
 					<string>meta.newtag.qlikview-vars</string>
+				</dict>
+			</array>
+		</dict>
+		<key>section</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>comment.line.double-dash.qlikview-vars</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>support.variable.qlikview-vars meta.name.section.qlikview-vars</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>^(#SECTION )\s*(.+)$</string>
 				</dict>
 			</array>
 		</dict>
@@ -247,12 +280,6 @@
 				<dict>
 					<key>match</key>
 					<string>^---$</string>
-					<key>name</key>
-					<string>support.constant.qlikview-vars</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>^\.\.\.$</string>
 					<key>name</key>
 					<string>support.constant.qlikview-vars</string>
 				</dict>
