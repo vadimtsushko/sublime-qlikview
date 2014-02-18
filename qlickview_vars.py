@@ -18,25 +18,9 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
 
     Implements:
         on_post_save"""
-
     EXT_QLIKVIEW_VARS  = ".qlikview-vars"
     EXT_QLIKVIEW_VARS_TABLE = ".csv"
     EXT_QLIKVIEW_VARS_QVS = ".vars.qvs"
-    ALLOWED_TAGS = ('Label','Comment', 'Definition','BackgroundColor','FontColor','TextFormat',
-        'Tag','Separator','#define', 'Macro','Description','EnableCondition',
-        'ShowCondition','SortBy','VisualCueUpper','VisualCueLower')
-    FIELDS_TO_SKIP = ('Definition','Tag','SET','LET','command','name','separator','Macro','Description')
-    NAME_MAP = {}
-
-    line_template = re.compile(r'^(?P<key>\w+?):\s*(?P<val>.*)$')
-    define_template = re.compile(r'^#define\s*(?P<key>\S+)\s+(?P<val>.*)$')
-    param_template = re.compile(r'^\s*\-\s*(?P<val>.*)$')
-
-    linenum = 0
-    defs = {}
-    macro = []
-    output = []
-    define_directives = {}
     moduleSettings = None
     reader = None
     def is_ST3(self):
