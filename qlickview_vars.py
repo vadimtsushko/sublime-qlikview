@@ -165,7 +165,8 @@ class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
 class QvVarFileReader:
     ALLOWED_TAGS = ('Label','Comment', 'Definition','BackgroundColor','FontColor','TextFormat',
         'Tag','Separator','#define', 'Macro','Description','EnableCondition',
-        'ShowCondition','SortBy','VisualCueUpper','VisualCueLower')
+        'ShowCondition','SortBy','VisualCueUpper','VisualCueLower','Symbol',
+        'ThousandSymbol','MillionSymbol','BillionSymbol')
     FIELDS_TO_SKIP = ('Definition','Tag','SET','LET','command','name','separator','Macro','Description')
     NAME_MAP = {}
 

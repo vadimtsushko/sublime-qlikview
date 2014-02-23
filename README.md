@@ -75,13 +75,15 @@ Optional tags exported as additional variables (additional rows in csv variable 
 - BackgroundColor
 - FontColor
 - TextFormat
-- Separator
-- Description
 - EnableCondition
 - ShowCondition
 - SortBy
 - VisualCueUpper
 - VisualCueLower
+- Symbol
+- ThousandSymbol
+- MillionSymbol
+- BillionSymbol
 
 Usual minimal expression definition looks like
 

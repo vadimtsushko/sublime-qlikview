@@ -45,7 +45,7 @@ repository:
   expression:
     patterns:
     - name: meta.expression.qlikview-vars
-      begin: '^(Definition|Macro|Condition|BackgroundColor|FontColor|TextFormat|EnableCondition|ShowCondition|SortBy|VisualCueUpper|VisualCueLower):'
+      begin: '^(Definition|Macro|Condition|BackgroundColor|FontColor|TextFormat|EnableCondition|ShowCondition|SortBy|VisualCueUpper|VisualCueLower|Symbol|ThousandSymbol|MillionSymbol|BillionSymbol):'
       beginCaptures:
         '0': {name: support.constant.qlikview-vars}
       end: ^(?=\S)
