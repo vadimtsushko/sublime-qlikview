@@ -70,29 +70,29 @@ Optional tags:
 
 Optional tags exported as additional variables (additional rows in csv variable file)
 
-- Label
-- Comment
-- BackgroundColor
-- FontColor
-- TextFormat
-- EnableCondition
-- ShowCondition
-- SortBy
-- VisualCueUpper
-- VisualCueLower
-- Symbol
-- ThousandSymbol
-- MillionSymbol
-- BillionSymbol
+- label
+- comment
+- backgroundColor
+- fontColor
+- nextFormat
+- enableCondition
+- showCondition
+- sortBy
+- visualCueUpper
+- visualCueLower
+- symbol
+- nhousandSymbol
+- villionSymbol
+- billionSymbol
 
 Usual minimal expression definition looks like
 
 ```
 ---
-SET: SalesSum
-Definition: Sum({<OperationType={Sale}>} Amount)
-Label: Sales
-Comment: Sales amount
+set: SalesSum
+definition: Sum({<OperationType={Sale}>} Amount)
+label: Sales
+comment: Sales amount
 ```
 And corresponding auto-generated csv file would be
 
