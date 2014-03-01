@@ -98,7 +98,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(Definition|Macro|Condition|BackgroundColor|FontColor|TextFormat|EnableCondition|ShowCondition|SortBy|VisualCueUpper|VisualCueLower|Symbol|ThousandSymbol|MillionSymbol|BillionSymbol):</string>
+					<string>^(definition|macro|condition|backgroundColor|fontColor|textFormat|enableCondition|showCondition|sortBy|visualCueUpper|visualCueLower|symbol|thousandSymbol|millionSymbol|billionSymbol):</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>
@@ -148,7 +148,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>^\s*(SET|LET):\s*(\w+)\s*$</string>
+					<string>^\s*(set|let):\s*(\w+)\s*$</string>
 				</dict>
 			</array>
 		</dict>
@@ -158,7 +158,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(Label|Comment):\s*(?==)</string>
+					<string>^(label|comment):\s*(?==)</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>
@@ -195,7 +195,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>^(Label|Comment):</string>
+					<string>^(label|comment):</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>0</key>
@@ -267,7 +267,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(^(\s)*(Tag|Description):(\s)*)</string>
+					<string>(^(\s)*(tag|description):(\s)*)</string>
 					<key>name</key>
 					<string>support.constant.qlikview-vars</string>
 				</dict>

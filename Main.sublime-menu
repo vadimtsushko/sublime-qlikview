@@ -1,23 +1,69 @@
 [
     {
-        "id": "tools",
-        "children":
-        [
+        "children": [
             {
-                "id": "packages",
-                "caption": "Packages",
-                "children":
-                [
+                "children": [
                     {
-                        "caption": "QlikView",
-                        "id": "qlikview",
-                        "children":
-                        [
-                            { "caption": "New ETL module…", "command": "new_etl_module" }
-                        ]
+                        "children": [
+                            {
+                                "command": "new_etl_module", 
+                                "caption": "New ETL module"
+                            }
+                        ], 
+                        "id": "qlikview", 
+                        "caption": "InQlik-Tools"
                     }
-                ]
+                ], 
+                "id": "packages", 
+                "caption": "Packages"
             }
-        ]
+        ], 
+        "id": "tools"
+    }, 
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "children": [
+                            {
+                                "args": {
+                                    "file": "${packages}/InQlik-Tools/README.md"
+                                }, 
+                                "command": "open_file", 
+                                "caption": "README"
+                            }, 
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "args": {
+                                    "file": "${packages}/InQlik-Tools/QlikView variables file.sublime-settings"
+                                }, 
+                                "command": "open_file", 
+                                "caption": "QlikView Variables file settings: Default"
+                            }, 
+                            {
+                                "args": {
+                                    "file": "${packages}/User/QlikView variables file.sublime-settings"
+                                }, 
+                                "command": "open_file", 
+                                "caption": "QlikView Variables file settings: User"
+                            }, 
+                            {
+                                "caption": "-"
+                            }
+                        ], 
+                        "caption": "InQlik-Tools"
+                    }
+                ], 
+                "mnemonic": "P", 
+                "id": "package-settings", 
+                "caption": "Package Settings"
+            }
+        ], 
+        "mnemonic": "n", 
+        "id": "preferences", 
+        "caption": "Preferences"
     }
 ]

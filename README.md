@@ -1,4 +1,4 @@
-QlikView Tools for Sublime Text
+InQlik Tools for Sublime Text
 =============================
 
 ##Language plugin for QlikView load scripts
@@ -126,7 +126,7 @@ For all Sublime Text 2/3 users we recommend install via [Package Control][1].
 
 1. Click the `Preferences > Browse Packages…` menu
 2. Browse up a folder and then into the `Installed Packages/` folder
-3. Download [zip package][3] rename it to `QlikView Tools.sublime-package` and copy it into the `Installed Packages/` directory
+3. Download [zip package][3] rename it to `InQlik-Tools.sublime-package` and copy it into the `Installed Packages/` directory
 4. Restart Sublime Text
 
 [Last changes](CHANGELOG.md)
@@ -139,7 +139,7 @@ Specifically QVD viewer does not for in ST2 and disabled explicitly in it.
 
 
 
- [home]: https://github.com/vadimtsusko/sublime-qlikview
+ [home]: https://github.com/inqlik/inqlik-tools
  [1]: https://sublime.wbond.net/
  [2]: https://sublime.wbond.net/installation
- [3]: https://github.com/vadimtsusko/sublime-qlikview/archive/master.zip
+ [3]: https://github.com/inqlik/inqlik-tools/archive/master.zip
