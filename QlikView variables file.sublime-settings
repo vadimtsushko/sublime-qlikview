@@ -1,0 +1,21 @@
+{
+  "separator":".",
+  "mappings": {
+    "set": "SET",
+    "let": "LET",
+    "label": "Label",
+    "comment": "Comment",
+    "backgroundColor": "backgroundColor",
+    "fontColor": "FontColor",
+    "textFormat": "TextFormat",
+    "enableCondition":"EnableCondition",
+    "showCondition":"ShowCondition",
+    "sortBy":"SortBy",
+    "visualCueUpper":"VisualCueUpper",
+    "visualCueLower":"VisualCueLower",
+    "symbol":"Symbol",
+    "thousandSymbol":"ThousandSymbol",
+    "millionSymbol":"MillionSymbol",
+    "billionSymbol":"BillionSymbol"
+  }
+}

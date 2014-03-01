@@ -21,7 +21,7 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
     EXT_QLIKVIEW_VARS  = ".qlikview-vars"
     EXT_QLIKVIEW_VARS_TABLE = ".csv"
     EXT_QLIKVIEW_VARS_QVS = ".vars.qvs"
-    moduleSettings = None
+    modulesettings = None
     reader = None
     def is_ST3(self):
         ''' check if ST3 based on python version '''
@@ -34,8 +34,8 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
     def on_post_save(self, view):
         fn = view.file_name()
         if (fn.endswith(self.EXT_QLIKVIEW_VARS)):
-            self.moduleSettings = view.settings()
-            self.reader = QvVarFileReader(self.moduleSettings)
+            self.modulesettings = view.settings()
+            self.reader = QvVarFileReader(self.modulesettings)
             self.regenerate_expression_tab_file(view.file_name())
 
     def regenerate_tab_file_content(self,path, onload=False):
@@ -64,7 +64,7 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
                 return None
     def regenerate_expression_tab_file(self,path, onload=False, force=False):
         start = datetime.datetime.utcnow()
-        qdf_output_mode = self.moduleSettings.get("output_mode","QDF") == "QDF"
+        qdf_output_mode = self.modulesettings.get("output_mode","QDF") == "QDF"
         if qdf_output_mode:
             outExt = self.EXT_QLIKVIEW_VARS_TABLE
         else:
@@ -91,7 +91,7 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
             for row in self.reader.output:
                 exp = row[2]
                 if '$(' in exp:
-                    command = 'LET'
+                    command = 'let'
                     exp = exp.replace("'","~~~")
                     exp = exp.replace("$(","@(")
                     exp = "replace(replace('%s','~~~', 'chr(39)'), '@(', chr(39) & '(')" % exp
@@ -104,7 +104,7 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
         print(' Saving elapsed: ' + str(datetime.datetime.utcnow()-start))
 
 class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
-    moduleSettings = None
+    modulesettings = None
     edit = None
     path = ''
     reader = ''
@@ -120,11 +120,11 @@ class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
             return
         if not fn.lower().endswith(EXT_QLIKVIEW_VARS):
             return;
-        self.moduleSettings = view.settings()
-        syntax = self.moduleSettings.get('syntax')
+        self.modulesettings = view.settings()
+        syntax = self.modulesettings.get('syntax')
         print(syntax)
         content = view.substr(Region(0,view.size()))
-        reader = QvVarFileReader(self.moduleSettings)
+        reader = QvVarFileReader(self.modulesettings)
         reader.parse_content(content)
         self.view = sublime.active_window().new_file()
         view = self.view
@@ -159,15 +159,15 @@ class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
     def output_expanded(self,expander):
         for row in expander.output:
             self.add_line('---')
-            self.add_line('LET: ' + row[0])
-            self.add_line('Definition: '+ row[1])
+            self.add_line('let: ' + row[0])
+            self.add_line('definition: '+ row[1])
 
 class QvVarFileReader:
-    ALLOWED_TAGS = ('Label','Comment', 'Definition','BackgroundColor','FontColor','TextFormat',
-        'Tag','Separator','#define', 'Macro','Description','EnableCondition',
-        'ShowCondition','SortBy','VisualCueUpper','VisualCueLower','Symbol',
-        'ThousandSymbol','MillionSymbol','BillionSymbol')
-    FIELDS_TO_SKIP = ('Definition','Tag','SET','LET','command','name','separator','Macro','Description')
+    ALLOWED_TAGS = ('label','comment', 'definition','backgroundColor','fontColor','textFormat',
+        'tag','separator','#define', 'macro','description','enableCondition',
+        'showCondition','sortBy','visualCueUpper','visualCueLower','symbol',
+        'thousandSymbol','millionSymbol','billionSymbol')
+    FIELDS_TO_SKIP = ('definition','tag','set','let','command','name','separator','macro','description')
     NAME_MAP = {}
 
     line_template = re.compile(r'^(?P<key>\w+?):\s*(?P<val>.*)$')
@@ -179,23 +179,23 @@ class QvVarFileReader:
     macro = []
     output = []
     define_directives = {}
-    moduleSettings = None
-    def __init__(self,moduleSettings):
+    modulesettings = None
+    def __init__(self,modulesettings):
         self.linenum = 0
         self.defs = {}
         self.macro = []
         self.output = []
         self.define_directives = {}
-        self.moduleSettings = moduleSettings
+        self.modulesettings = modulesettings
 
     def put_row(self, key, value, command, comment, priority):
             self.output.append([command.upper(), key ,value, comment, priority])
     def parse_content(self,text):
         self.NAME_MAP = {}
-        mappings = self.moduleSettings.get('mappings',{})
+        mappings = self.modulesettings.get('mappings',{})
         for tag in self.ALLOWED_TAGS:
             self.NAME_MAP[tag] = mappings.get(tag,tag);
-        self.NAME_MAP['separator'] = self.moduleSettings.get('separator','.')
+        self.NAME_MAP['separator'] = self.modulesettings.get('separator','.')
         expression = {}
         defs = {}
         define_directives = {}
@@ -226,26 +226,26 @@ class QvVarFileReader:
                 return'Parsing error: `name` property is absent'
             if exp['name'] in defs:
                 return 'Parsing error: duplicate expression with name `%s`' % exp['name']
-            if exp.get('Definition') is not None and exp.get('Macro') is not None:
+            if exp.get('definition') is not None and exp.get('macro') is not None:
                return 'Parsing error: Expression have defined both `definition` and `macro` property. Something one must be defined'
-            if exp.get('Definition') is None:
-                if  exp.get('Macro') is None:
+            if exp.get('definition') is None:
+                if  exp.get('macro') is None:
                     return 'Parsing error: Expression `%s` have not defined `definition` or `macro` property' % exp['name']
-                exp['Definition'] = expand_macro()
-            local_def = exp['Definition']
+                exp['definition'] = expand_macro()
+            local_def = exp['definition']
             for k, v in define_directives.items():
                 local_def = local_def.replace(k,v)
-            exp['Definition'] = local_def
-            defs[exp['name']] = exp['Definition']
+            exp['definition'] = local_def
+            defs[exp['name']] = exp['definition']
             comment = exp.get('Description')
             tag = exp.get('Tag')
             command = exp.get('command')
             name = exp.get('name')
-            self.put_row(name,expression['Definition'],command, comment, tag)
+            self.put_row(name,expression['definition'],command, comment, tag)
             for key in exp.keys():
                 if key not in self.FIELDS_TO_SKIP:
                     varName = '%s%s%s' % (name,self.NAME_MAP['separator'],self.NAME_MAP[key])
-                    self.put_row(varName,expression[key],'SET', '', tag) 
+                    self.put_row(varName,expression[key],'set', '', tag) 
             init_expression()
             return None
         def parse_val(text):
@@ -284,9 +284,9 @@ class QvVarFileReader:
                     expression = {}
                     continue
                 if current_field is not None:
-                    if current_field == 'Macro':
+                    if current_field == 'macro':
                         if len(self.macro) == 0:
-                           self.macro.append(expression['Macro']) 
+                           self.macro.append(expression['macro']) 
                         param_match = self.param_template.match(line)
                         if param_match is None:
                             raise SyntaxError('Unexpected macro param format: "%s" for macro "%s"' % (line,self.macro[1]))
@@ -301,15 +301,15 @@ class QvVarFileReader:
             m['key'] = m['key'].strip()
             m['val'] = m['val'].strip()
             current_field = m['key']
-            if m['key'] == 'SET' or m['key'] == 'LET':
+            if m['key'] == 'set' or m['key'] == 'let':
                 expression['name'] =  m['val']   
                 expression['command'] = m['key']
             elif m['key'] in self.ALLOWED_TAGS:
                 expression[m['key']] = m['val']
             else:
-                if m['key'] == 'Macro':
+                if m['key'] == 'macro':
                     self.macro.append(m['val'])
-                    expression['Macro'] = self.macro
+                    expression['macro'] = self.macro
                 else:
                     raise SyntaxError('Unexpected QlikView expression property: "%s"' % m['key'])
         error = process_expression(expression)

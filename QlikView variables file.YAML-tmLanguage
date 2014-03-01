@@ -45,7 +45,7 @@ repository:
   expression:
     patterns:
     - name: meta.expression.qlikview-vars
-      begin: '^(Definition|Macro|Condition|BackgroundColor|FontColor|TextFormat|EnableCondition|ShowCondition|SortBy|VisualCueUpper|VisualCueLower|Symbol|ThousandSymbol|MillionSymbol|BillionSymbol):'
+      begin: '^(definition|macro|condition|backgroundColor|fontColor|textFormat|enableCondition|showCondition|sortBy|visualCueUpper|visualCueLower|symbol|thousandSymbol|millionSymbol|billionSymbol):'
       beginCaptures:
         '0': {name: support.constant.qlikview-vars}
       end: ^(?=\S)
@@ -57,7 +57,7 @@ repository:
   expressionWithEqualSign:
     patterns:
     - name: meta.expression.qlikview-vars
-      begin: ^(Label|Comment):\s*(?==)
+      begin: ^(label|comment):\s*(?==)
       beginCaptures:
         '0': {name: support.constant.qlikview-vars}
       end: ^(?=\S)
@@ -69,7 +69,7 @@ repository:
   expressionWithoutEqualSign:
     patterns:
     - name: string.single.quoted.qlikview-vars
-      begin: '^(Label|Comment):'
+      begin: '^(label|comment):'
       beginCaptures:
         '0': {name: support.constant.qlikview-vars}
       end: ^(?=\S)
@@ -85,7 +85,7 @@ repository:
 
   expressionName:
     patterns:
-    - match: ^\s*(SET|LET):\s*(\w+)\s*$
+    - match: ^\s*(set|let):\s*(\w+)\s*$
       captures:
         '1': {name: support.constant.qlikview-vars}
         '2': {name: support.variable.qlikview-vars entity.name.type.expression.qlikview-vars}
@@ -93,7 +93,7 @@ repository:
   simpleField:
     patterns:
     - name: support.constant.qlikview-vars
-      match: (^(\s)*(Tag|Description):(\s)*)
+      match: (^(\s)*(tag|description):(\s)*)
 
   yamlNewDocument:
     patterns:
