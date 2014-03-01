@@ -1,5 +1,17 @@
 ###Changelog
 
+####0.1.21
+
+- Package renamed to InQlik Tools
+- Tags names changed to lowercase camelCase format
+- Menu items for package preferences
+- Default settings for variable files
+
+####0.1.20
+
+- Bugfix in error processing in variable files plugin
+- Additional tags in variable files plugin
+
 ####0.1.19
 
 - Symbols in qvs: suroutines, variables and table identifiers. Tabs are local symbols
