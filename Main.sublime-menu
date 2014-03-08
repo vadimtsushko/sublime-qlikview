@@ -8,6 +8,10 @@
                             {
                                 "command": "new_etl_module", 
                                 "caption": "New ETL module"
+                            },
+                            {
+                                "command": "qlikview_open_log", 
+                                "caption": "Open reload log file"
                             }
                         ], 
                         "id": "qlikview", 
