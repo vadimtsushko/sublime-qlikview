@@ -6,12 +6,6 @@
 	<array>
 		<string>qlikview-vars</string>
 	</array>
-	<key>foldingStartMarker</key>
-	<string>^#SECTION</string>
-	<key>foldingStopMarker</key>
-	<string>^#ENDSECTION</string>
-	<key>keyEquivalent</key>
-	<string>^~J</string>
 	<key>name</key>
 	<string>QlikView vars file</string>
 	<key>patterns</key>
