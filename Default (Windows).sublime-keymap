@@ -1,0 +1,6 @@
+[
+  {"keys": ["ctrl+shift+l"], "command": "qlikview_open_log", 
+  "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvs" }]},
+  {"keys": ["ctrl+shift+l"], "command": "qlikview_transform_log", 
+  "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvw.log" }]}
+]

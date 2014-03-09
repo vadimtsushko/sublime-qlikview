@@ -5,17 +5,4 @@ fileTypes: [qvw.log]
 uuid: 6b77dc03-7003-41f4-a9f6-287849f88d4a
 
 patterns:
-- include: '#log_line'
-repository:
-
-
-#3/7/2014 9:51:05 PM: 0002
-  log_line:
-    patterns:
-    - name: meta.expression.qlikview-vars
-      begin: '^\s*(\d+\/\d+\/\d{4} \d+:\d+:\d+ (A|P)M:.{6})'
-      beginCaptures:
-        '1': {name: support.constant.qlikview-vars}
-      end: $
-      patterns:
-      - include: source.qvs
+- include: 'source.qvs'
