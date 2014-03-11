@@ -1,5 +1,10 @@
 ###Changelog
 
+####0.1.22
+
+- Qvw.log file viewer added
+- Menu and keyboard (ctrl-shilt+l) commands for opening and reformat qvw.log files
+
 ####0.1.21
 
 - Package renamed to InQlik Tools

@@ -8,6 +8,14 @@
                             {
                                 "command": "new_etl_module", 
                                 "caption": "New ETL module"
+                            },
+                            {
+                                "command": "qlikview_open_log", 
+                                "caption": "Open and reformat qvw.log file"
+                            },
+                            {
+                                "command": "qlikview_transform_log", 
+                                "caption": "Reformat qvw.log file"
                             }
                         ], 
                         "id": "qlikview", 

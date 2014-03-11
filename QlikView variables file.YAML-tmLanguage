@@ -1,9 +1,6 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: QlikView vars file
 fileTypes: [qlikview-vars]
-foldingStartMarker: ^#SECTION
-foldingStopMarker: ^#ENDSECTION
-keyEquivalent: ^~J
 
 scopeName: source.qlikview-vars
 
