@@ -25,14 +25,14 @@ class QlikviewTransformLogCommand(sublime_plugin.TextCommand):
         trace_mode = False
         for line in txt.splitlines():
             if trace_mode:
-               line = re.sub(r'^(\s*\d+\/\d+\/\d{4} \d+:\d+:\d+ (A|P)M: .{4})',r'//-->> \1',line) 
+               line = re.sub(r'^(\s*\d+[/.-]\d+[/.-]\d{4} \d+:\d+:\d+( AM| PM)?: .{4})',r'//>> \1',line) 
                trace_mode = False
             else: 
-                line = re.sub(r'^\s*\d+\/\d+\/\d{4} \d+:\d+:\d+ (A|P)M:\s+\d{4}','',line)
+                line = re.sub(r'^\s*\d+[/.-]\d+[/.-]\d{4} \d+:\d+:\d+( AM| PM)?:\s+\d{4}','',line)
                 if re.match(r'^\s*TRACE',line,flags=re.IGNORECASE):
                     trace_mode = True
                     print(line)
-                line = re.sub(r'^(\s*\d+\/\d+\/\d{4} \d+:\d+:\d+ (A|P)M:  {4})',r'//>> \1',line)
+                line = re.sub(r'^(\s*\d+[/.-]\d+[/.-]\d{4} \d+:\d+:\d+( AM| PM)?:  {4})',r'//>> \1',line)
             self.addLine(line)
 
     def addLine(self,line):
