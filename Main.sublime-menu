@@ -11,7 +11,11 @@
                             },
                             {
                                 "command": "qlikview_open_log", 
-                                "caption": "Open reload log file"
+                                "caption": "Open and reformat qvw.log file"
+                            },
+                            {
+                                "command": "qlikview_transform_log", 
+                                "caption": "Reformat qvw.log file"
                             }
                         ], 
                         "id": "qlikview", 

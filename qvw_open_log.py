@@ -32,3 +32,5 @@ class QlikviewOpenLogCommand(sublime_plugin.WindowCommand):
         sublime.set_timeout_async(self.transform,100)
     else:
         self.view.run_command('qlikview_transform_log') 
+  def is_enabled(self):
+    return self.window.active_view().file_name().upper().endswith('.QVS')

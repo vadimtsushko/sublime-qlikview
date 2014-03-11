@@ -37,15 +37,5 @@ class QlikviewTransformLogCommand(sublime_plugin.TextCommand):
 
     def addLine(self,line):
         self.view.insert(self.edit, self.view.size(), line+'\n')
-    def closeOthers(self,viewHeader):
-        window = self.view.window()
-        myId = self.view.id()
-        for v in window.views():
-            if v.id() == myId:
-                continue
-            l = v.line(sublime.Region(0,0))
-            line = v.substr(l)
-            if (line == viewHeader):
-                window.focus_view(v)
-                window.run_command('close')
-                window.focus_view(self.view)
+    def is_enabled(self):
+        return sublime.active_window().active_view().file_name().upper().endswith('.QVW.LOG')        
