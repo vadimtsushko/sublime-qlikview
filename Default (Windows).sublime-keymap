@@ -2,5 +2,9 @@
   {"keys": ["ctrl+shift+l"], "command": "qlikview_open_log", 
   "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvs" }]},
   {"keys": ["ctrl+shift+l"], "command": "qlikview_transform_log", 
-  "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvw.log" }]}
+  "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvw.log" }]},
+  {"keys": ["f12"], "command": "qlikview_goto_definition", 
+  "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvs"}]},
+  {"keys": ["f12"], "command": "qlikview_goto_definition", 
+  "context": [{ "key": "selector", "operator": "equal", "operand": "source.qvw.log"}]}
 ]

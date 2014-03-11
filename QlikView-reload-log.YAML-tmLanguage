@@ -5,4 +5,33 @@ fileTypes: [qvw.log]
 uuid: 6b77dc03-7003-41f4-a9f6-287849f88d4a
 
 patterns:
-- include: 'source.qvs'
+- include: '#assignment'
+- include: '#tableIdentifiers'
+- include: '#subroutine'
+- include: '#log_line'
+
+repository:
+  log_line:
+    patterns:
+    - name: meta.line.qvw.log
+      begin: ^
+      end: $
+      patterns:
+      - include: source.qvs
+  assignment:
+    patterns:
+    - match: ^\s*([LlSs][Ee][Tt])\s+((\w|\.)+)\s*=
+      captures:
+       '1': {name: keyword.control.qvs}
+  tableIdentifiers:
+    patterns:
+    - name: support.constant.qvs
+      match: ^(\s)*(\w+):(\s)*$
+      captures:
+        '2': {name: support.constant.qvs}
+  subroutine:
+    patterns:
+    - match: ^\s*([Ss][Uu][Bb])\s+((?:\w|\.)+)
+      captures:
+       '1': {name: keyword.control.qvs}
+       '2': {name: support.class}
