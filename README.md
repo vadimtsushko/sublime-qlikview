@@ -36,7 +36,7 @@ You may also use relative path syntax and skip file part of path string if base 
 
     //#!..\Apps
 
-Ctrl-Shift-B key combination opens corresponding qlikview application instead of reloading it
+`Ctrl-Shift-B` key combination opens corresponding qlikview application instead of reloading it
 
 ####QVD Viewer
 
@@ -44,6 +44,16 @@ Clicking on QVD file in project panel instantly open view with information avail
 
 ![QVD Viewer](http://monosnap.com/image/3AcB6j9A7ktIx1FPyzgkflmWi63gh6.png)
 
+####QVW.LOG file viewer
+
+While you editing qvs script file `Ctrl-Shift-L` key combination or menu command `Tools->Packages->InQlik-Tools->Open and refomat qvw.log file` opens qvw.log file corresponding to currently edited script. If you open qvw.log file directly `Ctrl-Shift-L` key combination or menu command just reformat log file.
+
+![Qvw.log file viewer](http://monosnap.com/image/QGjpepWj1VNxcR5Vvx4VmACqsIB2Vh.png)
+
+- Output of qlikview script, including output from TRACE command are formatted as comment
+- Input commands are cleared from timestamp info
+- Syntax coloring is applied to input commands
+- Tables, variables and subroutine definitions are not added to list of defined symbols (Goto definition for example never jump to qvw.log file but to source qvs file)
 
 ##Expression Editor: Language plugin for editing QlikView expressions and variables
 
