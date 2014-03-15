@@ -72,9 +72,6 @@ repository:
       end: ^(?=\S)
       endCaptures:
         '0': {name: support.constant.qlikview-vars}
-      patterns:
-      - {name: support.constant.qlikview-vars}
-
   newtag:
     patterns:
     - name: meta.newtag.qlikview-vars

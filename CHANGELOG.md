@@ -1,5 +1,9 @@
 ###Changelog
 
+####0.1.23
+
+- Tabular cvs format added for Expression Editor
+
 ####0.1.22
 
 - Qvw.log file viewer added
