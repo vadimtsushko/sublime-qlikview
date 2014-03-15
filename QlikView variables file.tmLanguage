@@ -210,13 +210,6 @@
 					</dict>
 					<key>name</key>
 					<string>string.single.quoted.qlikview-vars</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>name</key>
-							<string>support.constant.qlikview-vars</string>
-						</dict>
-					</array>
 				</dict>
 			</array>
 		</dict>
