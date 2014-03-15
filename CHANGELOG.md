@@ -1,8 +1,12 @@
 ###Changelog
 
-####0.1.23
+####0.1.24
 
 - Tabular cvs format added for Expression Editor
+
+####0.1.23
+
+- Bugfix to qvw.log files viewer
 
 ####0.1.22
 
