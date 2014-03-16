@@ -158,7 +158,7 @@ For all Sublime Text 2/3 users we recommend install via [Package Control][1].
 
 I've switched to ST3, further development will be focused on that platform.
 Basic functionality (syntax highlighting for qvs files and expression files) should work on ST2.
-Specifically QVD viewer does not for in ST2 and disabled explicitly in it.
+Specifically QVD viewer does not work for ST2 and disabled explicitly in it.
 
 
 
