@@ -26,7 +26,7 @@ By default it will look up qvw file with same name as qvs script in same directo
 
     c:\Program Files\QlikView\qv.exe /R /NoData c:\QvProjects\Project1\Apps\LoadData.qvw
 
-Hopefully script in your LoadData.qvw file contains line `$(must_include=LoadData.qvs)`  
+Load script in your LoadData.qvw file should contain include directive pointing to LoadData.qvs, for example `$(must_include=LoadData.qvs)`  
 
 If qvw file stays in another directory it may be indicated explicitly in first line of qvs script file by shebang-like comment string. For example, if your script file is `c:\QvProjects\Project1\Scripts\LoadData.qvs` corresponding qvd-generator `c:\QvProjects\Project1\Apps\LoadData.qvw` would be found if qvs script has first line
 
