@@ -33,7 +33,7 @@ class QlikviewReloadCommand(sublime_plugin.WindowCommand):
       sublime.status_message('Reloading file %s' % qvwFile)
       print("commandVariant", commandVariant)
       if commandVariant is None:
-        self.window.run_command("exec", { "cmd": [qv_executable,"/R","/nodata",qvwFile]})
+        self.window.run_command("exec", { "cmd": [qv_executable,"/R","/nodata","/Nosecurity",qvwFile]})
       else:
         self.window.run_command("exec", { "cmd": ["cmd","/C",qv_executable,qvwFile]})
 
