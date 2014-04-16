@@ -26,7 +26,7 @@ By default it will look up qvw file with same name as qvs script in same directo
 
     c:\Program Files\QlikView\qv.exe /R /NoData c:\QvProjects\Project1\Apps\LoadData.qvw
 
-Hopefully script in your LoadData.qvw file contains line `$(must_include=LoadData.qvs)`  
+Load script in your LoadData.qvw file should contain include directive pointing to LoadData.qvs, for example `$(must_include=LoadData.qvs)`  
 
 If qvw file stays in another directory it may be indicated explicitly in first line of qvs script file by shebang-like comment string. For example, if your script file is `c:\QvProjects\Project1\Scripts\LoadData.qvs` corresponding qvd-generator `c:\QvProjects\Project1\Apps\LoadData.qvw` would be found if qvs script has first line
 
@@ -158,7 +158,7 @@ For all Sublime Text 2/3 users we recommend install via [Package Control][1].
 
 I've switched to ST3, further development will be focused on that platform.
 Basic functionality (syntax highlighting for qvs files and expression files) should work on ST2.
-Specifically QVD viewer does not for in ST2 and disabled explicitly in it.
+Specifically QVD viewer does not work for ST2 and disabled explicitly in it.
 
 
 
