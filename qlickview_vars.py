@@ -115,163 +115,111 @@ class QlikviewVariableFileListener(sublime_plugin.EventListener):
         f.close()
         print(' Saving elapsed: ' + str(datetime.datetime.utcnow()-start))
 
-# class QlikviewVariablesExportCommand(sublime_plugin.WindowCommand):
-#     """Save variables in one of export formats 
-#     along with current expression file in YAML like format (extentsion EXT_QLIKVIEW_VARS)
+class QlikviewVariablesExportCommand(sublime_plugin.WindowCommand):
+    """Save variables in one of export formats 
+    along with current expression file in YAML like format (extentsion EXT_QLIKVIEW_VARS)
 
-#     Implements:
-#         on_post_save"""
-#     EXT_QLIKVIEW_VARS  = ".qlikview-vars"
-#     EXT_QLIKVIEW_QDF_CSV = ".csv"
-#     EXT_QLIKVIEW_TABLE_CSV = ".table.csv"
-#     EXT_QLIKVIEW_VARS_QVS = ".vars.qvs"
-#     modulesettings = None
-#     reader = None
-#     output_mode = None
-#     def is_ST3(self):
-#         ''' check if ST3 based on python version '''
-#         version = sys.version_info
-#         if isinstance(version, tuple):
-#             version = version[0]
-#         elif getattr(version, 'major', None):
-#             version = version.major
-#         return (version >= 3)
-#     def run(self, output_mode=None):
-#         return
-#     def regenerate_tab_file_content(self,path, onload=False):
-#         (name, ext) = os.path.splitext(os.path.basename(path))
-#         f = None
-#         if self.is_ST3():
-#             f = open(path, 'r', encoding="utf-8")
-#         else:
-#             f = open(path, 'rb')
-#         read = f.read()
-#         f.close()
-# #        self.reader.parse_content(read)
+    Implements:
+        on_post_save"""
+    EXT_QLIKVIEW_VARS  = ".qlikview-vars"
+    EXT_QLIKVIEW_QDF_CSV = ".csv"
+    EXT_QLIKVIEW_TABLE_CSV = ".table.csv"
+    EXT_QLIKVIEW_VARS_QVS = ".vars.qvs"
+    modulesettings = None
+    reader = None
+    def is_ST3(self):
+        ''' check if ST3 based on python version '''
+        version = sys.version_info
+        if isinstance(version, tuple):
+            version = version[0]
+        elif getattr(version, 'major', None):
+            version = version.major
+        return (version >= 3)
+    def run(self, commandVariant=None):
+        view = self.window.active_view()
+        fn = view.file_name()
+        if (fn.endswith(self.EXT_QLIKVIEW_VARS)):
+            self.modulesettings = view.settings()
+            self.reader = QvVarFileReader(self.modulesettings)
+            self.regenerate_expression_tab_file(view.file_name())
 
-#         try:
-#             self.reader.parse_content(read)
-#         except Exception as e:
-#             msg  = isinstance(e, SyntaxError) and str(e) or "Error parsing QlikView expression "
-#             msg += " in file `%s` line: %d" % (path, self.reader.linenum)
-#             if onload:
-#                 # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
-#                 print("Error: " + msg)
-#             else:
-#                 sublime.error_message(msg)
-#             if not isinstance(e, SyntaxError):
-#                 print(e)  # print the error only if it's not raised intentionally
-#                 return None
-#     def regenerate_expression_tab_file(self,path, onload=False, force=False):
-#         start = datetime.datetime.utcnow()
-#         output_mode = self.modulesettings.get("output_mode","QDF")
-#         if output_mode == 'QDF':
-#             outExt = self.EXT_QLIKVIEW_QDF_CSV
-#         elif output_mode == 'QVS':
-#             outExt = self.EXT_QLIKVIEW_VARS_QVS
-#         elif output_mode == 'CVS':
-#             outExt = self.EXT_QLIKVIEW_TABLE_CSV
-#         else:
-#             sublime.error_message('Unknown output_format %s. Known formats are QDF (Csv file QlikView Deployment framework), QVS (Plain include script), CVS (Plain tabular csv)')
-#         outPath = path.replace(self.EXT_QLIKVIEW_VARS,outExt)
-#         self.regenerate_tab_file_content(path, onload=onload)
-#         f = None
-#         if self.is_ST3():
-#             if output_mode == 'QDF':
-#                 enc = 'utf-8'
-#             elif output_mode == 'CVS':
-#                 enc = 'utf-8'
-#             else: 
-#                 enc = 'utf-8-sig'
-#             f = open(outPath, 'w', encoding=enc, newline='')
-#         else:
-#             f = open(outPath,'wb')
+    def regenerate_tab_file_content(self,path, onload=False):
+        (name, ext) = os.path.splitext(os.path.basename(path))
+        f = None
+        if self.is_ST3():
+            f = open(path, 'r', encoding="utf-8")
+        else:
+            f = open(path, 'rb')
+        read = f.read()
+        f.close()
+#        self.reader.parse_content(read)
 
-#         if output_mode == 'QDF':
-#             writer = csv.writer(f)
-#             writer.writerow(['VariableName','VariableValue','Comments','Priority'])
-#             for row in self.reader.output:
-#                 writer.writerow(['%s %s' % (row[0] , row[1]), row[2], row[3], row[4]])
-#         elif output_mode == 'QVS':
-#             f.write('//////THIS IS AUTOGENERATED FILE. DO NOT EDIT IT DIRECTLY!!!!!!!!!!!!!\n\n')
-#             for row in self.reader.output:
-#                 exp = row[2]
-#                 if '$(' in exp:
-#                     command = 'let'
-#                     exp = exp.replace("'","~~~")
-#                     exp = exp.replace("$(","@(")
-#                     exp = "replace(replace('%s','~~~', 'chr(39)'), '@(', chr(39) & '(')" % exp
-#                 else:
-#                     command = row[0]
-#                 varName = row[1]
-#                 line = "%s %s = %s;\n" % (command,varName,exp) 
-#                 f.write(line)
-#         elif output_mode == 'CVS':
-#             writer = csv.writer(f)
-#             writer.writerow(['ExpressionName','Label','Comment','Description','Section','Definition'])
-#             for exp in self.reader.expressions:
-#                 writer.writerow([exp.get('name'),exp.get('label'),exp.get('comment'),exp.get('description'),None,exp.get('definition')])        
-#         f.close()
-#         print(' Saving elapsed: ' + str(datetime.datetime.utcnow()-start))
+        try:
+            self.reader.parse_content(read)
+        except Exception as e:
+            msg  = isinstance(e, SyntaxError) and str(e) or "Error parsing QlikView expression "
+            msg += " in file `%s` line: %d" % (path, self.reader.linenum)
+            if onload:
+                # Sublime Text likes "hanging" itself when an error_message is pushed at initialization
+                print("Error: " + msg)
+            else:
+                sublime.error_message(msg)
+            if not isinstance(e, SyntaxError):
+                print(e)  # print the error only if it's not raised intentionally
+                return None
+    def regenerate_expression_tab_file(self,path, onload=False, force=False):
+        start = datetime.datetime.utcnow()
+        output_mode = self.modulesettings.get("output_mode","QDF")
+        if output_mode == 'QDF':
+            outExt = self.EXT_QLIKVIEW_QDF_CSV
+        elif output_mode == 'QVS':
+            outExt = self.EXT_QLIKVIEW_VARS_QVS
+        elif output_mode == 'CVS':
+            outExt = self.EXT_QLIKVIEW_TABLE_CSV
+        else:
+            sublime.error_message('Unknown output_format %s. Known formats are QDF (Csv file QlikView Deployment framework), QVS (Plain include script), CVS (Plain tabular csv)')
+        outPath = path.replace(self.EXT_QLIKVIEW_VARS,outExt)
+        self.regenerate_tab_file_content(path, onload=onload)
+        f = None
+        if self.is_ST3():
+            if output_mode == 'QDF':
+                enc = 'utf-8'
+            elif output_mode == 'CVS':
+                enc = 'utf-8-sig'
+            else: 
+                enc = 'utf-8-sig'
+            f = open(outPath, 'w', encoding=enc, newline='')
+        else:
+            f = open(outPath,'wb')
+        expander = QlikViewVariableExpander(self.reader.output)
+        expander.expandAll()
+        if output_mode == 'QDF':
+            writer = csv.writer(f)
+            writer.writerow(['VariableName','VariableValue','Comments','Priority'])
+            for row in self.reader.output:
+                writer.writerow(['%s %s' % (row[0] , row[1]), expander.exp_dict[row[1]], row[3], row[4]])
+        elif output_mode == 'QVS':
+            f.write('//////THIS IS AUTOGENERATED FILE. DO NOT EDIT IT DIRECTLY!!!!!!!!!!!!!\n\n')
+            for row in self.reader.output:
+                exp = expander.exp_dict[row[1]]
+                if '$(' in exp:
+                    command = 'let'
+                    exp = exp.replace("'","~~~")
+                    exp = exp.replace("$(","@(")
+                    exp = "replace(replace('%s','~~~', 'chr(39)'), '@(', chr(39) & '(')" % exp
+                else:
+                    command = row[0]
+                varName = row[1]
+                line = "%s %s = %s;\n" % (command,varName,exp) 
+                f.write(line)
+        elif output_mode == 'CVS':
+            writer = csv.writer(f)
+            writer.writerow(['ExpressionName','Label','Comment','Description','Section','Definition'])
+            for exp in self.reader.expressions:
+                writer.writerow([exp.get('name'),exp.get('label'),exp.get('comment'),exp.get('description'),None,expander.exp_dict[exp.get('name')]])        
+        f.close()
+        print(' Saving elapsed: ' + str(datetime.datetime.utcnow()-start))
 
-# class QlikviewCheckVariablesCommand(sublime_plugin.TextCommand):
-#     modulesettings = None
-#     edit = None
-#     path = ''
-#     reader = ''
-#     VAR_PATTERN = re.compile('\\$\\((?P<key>[^=]\\S+)\\)')
-#     def run(self, edit):
-#         self.edit = edit
-#         self.view = sublime.active_window().active_view()
-#         self.path = self.view.file_name()
-#         view = self.view
-#         fn = view.file_name()
-#         if fn is None:
-#             print ('Can not test unsaved document')
-#             return
-#         if not fn.lower().endswith(EXT_QLIKVIEW_VARS):
-#             return;
-#         self.modulesettings = view.settings()
-#         syntax = self.modulesettings.get('syntax')
-#         print(syntax)
-#         content = view.substr(Region(0,view.size()))
-#         reader = QvVarFileReader(self.modulesettings)
-#         reader.parse_content(content)
-#         self.view = sublime.active_window().new_file()
-#         view = self.view
-#         view.set_scratch(True)
-#         (file_name, ext) = os.path.splitext(os.path.basename(fn))
-#         to_expand = []
-#         for row in reader.output:
-#             if not '.' in row[1]:
-#                 to_expand.append([row[1],row[2]])
-#         expander = QlikViewCommandExpander(to_expand)
-#         expander.expand()
-#         self.add_line(file_name+'.qlikview-vars-expand')
-#         self.add_line('')
-#         self.output_expanded(expander)
-#         self.view.set_syntax_file(syntax)
-#         self.close_others(file_name+'.qlikview-vars-expand')
-
-#     def add_line(self,line):
-#         self.view.insert(self.edit, self.view.size(), line + '\n')
-#     def close_others(self,viewHeader):
-#         window = self.view.window()
-#         myId = self.view.id()
-#         for v in window.views():
-#             if v.id() == myId:
-#                 continue
-#             l = v.line(sublime.Region(0,0))
-#             line = v.substr(l)
-#             if (line == viewHeader):
-#                 window.focus_view(v)
-#                 window.run_command('close')
-#                 window.focus_view(self.view)
-#     def output_expanded(self,expander):
-#         for row in expander.output:
-#             self.add_line('---')
-#             self.add_line('let: ' + row[0])
-#             self.add_line('definition: '+ row[1])
 
 class QvVarFileReader:
     ALLOWED_TAGS = ('label','comment', 'definition','backgroundColor','fontColor','textFormat',
@@ -429,3 +377,31 @@ class QvVarFileReader:
         if error is not None:
             raise SyntaxError(error)  
         return None
+class QlikViewVariableExpander:
+    expressions = []
+    exp_dict = {}
+    output = []
+    not_found = set()
+    VAR_PATTERN = re.compile('\\$\\((?P<key>[^=$][^())]+)\\)')
+    def __init__(self, expressions):
+        not_found = set()
+        self.expressions = list(expressions)
+        for exp in self.expressions:
+            self.exp_dict[exp[1]] = exp[2]
+    def expandAll(self):
+        for exp in self.expressions:
+            self.expandVariable(exp[1])
+    def expandVariable(self, key):
+        varToExpand = self.exp_dict[key]
+        needToTestFuther = False
+        for match in self.VAR_PATTERN.finditer(varToExpand):
+            variable = match.groupdict()['key']
+            if variable in self.exp_dict:
+                replace_string = self.exp_dict[variable]
+                varToExpand = varToExpand.replace('$(%s)' % variable, replace_string)
+                needToTestFuther = True 
+            else:
+                print('Cannot find variable: %s in expression %s' % (variable,key))
+        self.exp_dict[key] = varToExpand
+        if needToTestFuther:
+            self.expandVariable(key)

@@ -62,7 +62,6 @@ class QlikviewGotoDefinition(sublime_plugin.WindowCommand):
         return locations
 
     def run(self, symbol = None):
-        print('I here "GotoDefinition"')
         orig_sel = None
         v = self.window.active_view()
         if v:
