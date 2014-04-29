@@ -1,0 +1,11 @@
+{
+	"target": "qlikview_variables_export",
+  "selector": "source.qlikview-vars",
+	"variants": [
+		{
+			"name": "Run",
+			"target": "qlikview_variables_export",
+			"commandVariant": "simple"
+		}	
+	]
+}

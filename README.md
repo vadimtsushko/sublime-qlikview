@@ -17,6 +17,10 @@ InQlik Tools for Sublime Text
 
 In qvs files subroutine names, variables in variable assignment commands and table identifiers marked as symbols. So `Goto Definition`, `Goto Symbol` and `Goto Symbol in Project` commands work.
 
+####Goto file
+
+You can open any file in your project's directories from within qvs script. Default keymap is `Ctrl-F12`. That is something like [Open-include](https://github.com/SublimeText/Open-Include) but it can properly open files when part of the path presented by qlikview variables (important in Qlikview Deployment Framework environment). It is useful for opening of include scripts, qvd files (in embedded metadata viewer),
+and so on.
 
 ####Build System
 
