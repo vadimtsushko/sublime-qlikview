@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Sublime-qlikview : Sublime Text 2 language plugin for QlikView scripts" />
+    <meta name="description" content="Sublime-qlikview : Set of tools for QlikView development in Sublime Text 2/3" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,63 +19,21 @@
           <a id="forkme_banner" href="https://github.com/vadimtsushko/sublime-qlikview">View on GitHub</a>
 
           <h1 id="project_title">Sublime-qlikview</h1>
-          <h2 id="project_tagline">Sublime Text 2 language plugin for QlikView scripts</h2>
+          <h2 id="project_tagline">Set of tools for QlikView development in Sublime Text 2/3</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/vadimtsushko/sublime-qlikview/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/vadimtsushko/sublime-qlikview/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-
-<p><img src="images/screenshot1.png" alt="Screenshot 1"></p>
-
-<p><img src="images/screenshot2.png" alt="Screenshot 2"></p>
-
-<p><img src="images/screenshot3.png" alt="Screenshot 3"></p>
-
-<h4>Some features:</h4>
-<p>
-  <ul>
-    <li>Highlighting for strings, numbers, comments, variables, keywords, built-in functions e.t.c</li>    
-    <li>Comment/uncomment code block with CTRL-/ key combination</li>
-    <li>Ability to run load script from within Sublime Text 2</li>
-  </ul>  
-</p>
-
-<h4>Highlighting</h4>
-<p>Both block comments (/* */) and line comments (//) are supported.</p>
-<p>Variables, built-in functions and so on are trying properly show their boundaries by by coloring corresponding braces.</p>
-<p>Nesting supported for all constucts - variable as parameter of function, function within function, function within variable and so on</p>
-<p>Conflicts between some build-in functions and keywords (IF, LEFT, RIGHT, REPLACE) are resolving by context</p>
-
-<h4>Using command line parser to check syntax of script and reload QlikView document</h4>
-<p>In Sublime Text2 Build systems used to run external programs from within editor and and print captured output to the output panel.
-  Plugin distribution includes command-line parser and runner for qlikview scripts. 
-  With it command `Run` will parse your script and output syntax error in ouput panel. Double clik on error message bring you to line and column where successfull parsing breaks. (You may switch from output panel to editor window pressing Ctrl-1)
-
-  To reload your QlikView document after successful parsing first line of your script must point to QlikView document in question. For example 
-</p>
-<pre>
-  //#!c:\QlikDocs\CurrentProject\EtlApps\DataModelDebug.qvw
-</pre>
-<p>
-   First 4 symbols of first line must be strictly 
-<pre>   
-  //#!
-</pre>
-    (Shebang after line comment)
-<h4>Installation </h4>
-<p>Download plugin from <a href="http://inqlik.ru/downloads">InQlik download page</a>.
-  Extract zip file into Sublime Text 2 packages directory (You may locate packages directory by Sublime text 2 menu command: Preferences / Browse packages).
-  <br>
-  Plugin directory must be named Qlikview.
-</p>
-<p>Download dart-sdk from <a href="http://www.dartlang.org/tools/sdk/">Dartlang site</a> and add add dart-sdk/bin directory in your PATH
-</p>
-
-
-</section>
-</div>
+        <p>Current version of plugin moved to <a href="https://github.com/inqlik/inqlik-tools">InQlik-Tools</a> </p>
+      </section>
+    </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
@@ -85,17 +43,7 @@
       </footer>
     </div>
 
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-40130215-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
+    
 
   </body>
 </html>
